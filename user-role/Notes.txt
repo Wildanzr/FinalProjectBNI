@@ -1,3 +1,4 @@
 #1 - Initialize user-role service project
 #2 - Implement base service
 #3 - Adding swagger
+#4 - Implement eureka client
