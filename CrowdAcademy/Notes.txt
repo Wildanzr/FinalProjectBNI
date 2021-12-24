@@ -1,1 +1,2 @@
 #1 - Initial setup eureka server
+#2 - Has adding user-service
