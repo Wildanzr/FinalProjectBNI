@@ -1,1 +1,2 @@
 #1 - Initialize user service project
+#2 - Implement base service
