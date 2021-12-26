@@ -2,3 +2,4 @@
 #2 - Has adding user-service
 #3 - Has adding user-role-service
 #4 - Has adding post-service
+#5 - Has adding comment-service
