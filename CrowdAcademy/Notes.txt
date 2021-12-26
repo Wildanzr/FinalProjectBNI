@@ -3,3 +3,4 @@
 #3 - Has adding user-role-service
 #4 - Has adding post-service
 #5 - Has adding comment-service
+#6 - Has adding post-stats-service
