@@ -1,1 +1,2 @@
 #1 - Initialize post-stat service project
+#2 - Implement base service
