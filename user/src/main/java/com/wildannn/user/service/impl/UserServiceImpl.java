@@ -18,7 +18,19 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User create(User user) {
-        return userRepository.save(user);
+        User newUser = User.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .first_name(user.getFirst_name())
+                .last_name(user.getLast_name())
+                .gender(user.getGender())
+                .role_type_id(user.getRole_type_id())
+                .training_topic_id(user.getTraining_topic_id())
+                .build();
+
+        return userRepository.save(newUser);
     }
 
     @Override

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,13 +35,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
         User newUser = userService.create(user);
         return ResponseEntity.ok(newUser);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable("id") String id, @RequestBody User user) {
+    public ResponseEntity<?> updateUser(@PathVariable("id") String id, @Valid @RequestBody User user) {
         try {
             User updatedUser = userService.update(id, user);
             return ResponseEntity.ok(updatedUser);
