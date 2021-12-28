@@ -23,7 +23,7 @@ public class UserController {
     public ResponseEntity<?> listUser() {
         List<User> userList = userService.findAll();
         UserResponse response = UserResponse.builder()
-                .message("Success get all user")
+                .message("Success get all usersss")
                 .data(userList)
                 .build();
 
@@ -55,16 +55,25 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
-        List<User> userList = new ArrayList<>();
-        User newUser = userService.create(user);
+        try {
+            List<User> userList = new ArrayList<>();
+            User newUser = userService.create(user);
 
-        userList.add(newUser);
-        UserResponse response = UserResponse.builder()
-                .message("Success created user")
-                .data(userList)
-                .build();
+            userList.add(newUser);
+            UserResponse response = UserResponse.builder()
+                    .message("Success created user")
+                    .data(userList)
+                    .build();
 
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        } catch (Exception ex) {
+            ErrorResponse error = ErrorResponse.builder()
+                    .message(ex.getMessage())
+                    .status(404)
+                    .build();
+
+            return ResponseEntity.status(404).body(error);
+        }
     }
 
     @PatchMapping("/{id}")

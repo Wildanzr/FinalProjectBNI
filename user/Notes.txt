@@ -5,3 +5,4 @@
 #5 - Add input validator
 #6 - Add some validator and implement sequential id
 #7 - Add empty or null validator
+#8 - Add checking email (email should uniq)

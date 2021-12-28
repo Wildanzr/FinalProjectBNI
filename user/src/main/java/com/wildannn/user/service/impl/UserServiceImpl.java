@@ -19,6 +19,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User create(User user) {
+        //Mengecek apakah sudah ada user dengan alamat email yang akan didaftarkan
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new RuntimeException("Alamat email telah didaftarkan");
+        }
+
         User newUser = this.makeUser(user);
 
         return userRepository.save(newUser);
