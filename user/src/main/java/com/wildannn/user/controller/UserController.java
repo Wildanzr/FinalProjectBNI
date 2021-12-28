@@ -1,13 +1,15 @@
 package com.wildannn.user.controller;
 
 import com.wildannn.user.model.User;
-import com.wildannn.user.payload.InternalError;
+import com.wildannn.user.payload.UserResponse;
+import com.wildannn.user.payload.ErrorResponse;
 import com.wildannn.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,46 +21,94 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<?> listUser() {
-        List<User> allUsers = userService.findAll();
-        return ResponseEntity.ok(allUsers);
+        List<User> userList = userService.findAll();
+        UserResponse response = UserResponse.builder()
+                .message("Success get all user")
+                .data(userList)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findUser (@PathVariable("id") String id) {
         try {
+            List<User> userList = new ArrayList<>();
             User user = userService.findById(id);
-            return ResponseEntity.ok(user);
+
+            userList.add(user);
+            UserResponse response = UserResponse.builder()
+                    .message("Success get user id:" +id)
+                    .data(userList)
+                    .build();
+
+            return ResponseEntity.ok(response);
         } catch (Exception ex) {
-            InternalError error = new InternalError(ex.getMessage());
-            return ResponseEntity.internalServerError().body(error);
+            ErrorResponse error = ErrorResponse.builder()
+                    .message(ex.getMessage())
+                    .status(404)
+                    .build();
+
+            return ResponseEntity.status(404).body(error);
         }
     }
 
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+        List<User> userList = new ArrayList<>();
         User newUser = userService.create(user);
-        return ResponseEntity.ok(newUser);
+
+        userList.add(newUser);
+        UserResponse response = UserResponse.builder()
+                .message("Success created user")
+                .data(userList)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable("id") String id, @Valid @RequestBody User user) {
         try {
+            List<User> userList = new ArrayList<>();
             User updatedUser = userService.update(id, user);
-            return ResponseEntity.ok(updatedUser);
+
+            userList.add(updatedUser);
+            UserResponse response = UserResponse.builder()
+                    .message("Success updated user id:" +id)
+                    .data(userList)
+                    .build();
+
+            return ResponseEntity.ok(response);
         } catch (Exception ex) {
-            InternalError error = new InternalError(ex.getMessage());
-            return ResponseEntity.internalServerError().body(error);
+            ErrorResponse error = ErrorResponse.builder()
+                    .message(ex.getMessage())
+                    .status(404)
+                    .build();
+
+            return ResponseEntity.status(404).body(error);
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") String id) {
         try {
+            List<User> userList = new ArrayList<>();
             userService.delete(id);
-            return ResponseEntity.ok().build();
+
+            UserResponse response = UserResponse.builder()
+                    .message("Success deleted user id:" +id)
+                    .data(userList)
+                    .build();
+
+            return ResponseEntity.ok(response);
         } catch (Exception ex) {
-            InternalError error = new InternalError(ex.getMessage());
-            return ResponseEntity.internalServerError().body(error);
+            ErrorResponse error = ErrorResponse.builder()
+                    .message(ex.getMessage())
+                    .status(404)
+                    .build();
+
+            return ResponseEntity.status(404).body(error);
         }
     }
 }

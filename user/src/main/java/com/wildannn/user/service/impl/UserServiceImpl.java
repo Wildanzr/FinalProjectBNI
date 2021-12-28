@@ -15,11 +15,22 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private final UserRepository userRepository;
+    private final SequenceGeneratorService sequenceGeneratorService;
 
     @Override
     public User create(User user) {
+        User newUser = this.makeUser(user);
+
+        return userRepository.save(newUser);
+    }
+
+    //Membuat objek user
+    @Override
+    public User makeUser(User user) {
+        String sequenceID = String.valueOf(sequenceGeneratorService.generateSequence(User.SEQUENCE_NAME));
+
         User newUser = User.builder()
-                .id(user.getId())
+                .id(sequenceID)
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .password(user.getPassword())
@@ -30,7 +41,7 @@ public class UserServiceImpl implements UserService{
                 .training_topic_id(user.getTraining_topic_id())
                 .build();
 
-        return userRepository.save(newUser);
+        return newUser;
     }
 
     @Override
@@ -41,24 +52,34 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findById(String id) {
         return userRepository.findById(id).orElseThrow(()-> {
-            throw new RuntimeException("Not Found");
+            throw new RuntimeException("User id:" +id+ " not found.");
         });
     }
 
     @Override
     public User update(String id, User user) {
+        User willUpdateUser = this.makeUser(user);
         User updatedUser =this.findById(id);
-        updatedUser.setEmail(user.getEmail());
-        updatedUser.setUsername(user.getUsername());
-        updatedUser.setPassword(user.getPassword());
-        updatedUser.setFirst_name(user.getFirst_name());
-        updatedUser.setLast_name(user.getLast_name());
-        updatedUser.setGender(user.getGender());
-        updatedUser.setStatus(user.getStatus());
-        updatedUser.setRole_type_id(user.getRole_type_id());
-        updatedUser.setTraining_topic_id(user.getTraining_topic_id());
-        updatedUser.setUpdated_at(user.getUpdated_at());
+
+        updatedUser = updateUserData(updatedUser, willUpdateUser);
         return userRepository.save(updatedUser);
+    }
+
+    //Mengupdate data user lama dengan data user baru
+    @Override
+    public User updateUserData(User updatedUser, User willUpdateUser) {
+        updatedUser.setEmail(willUpdateUser.getEmail());
+        updatedUser.setUsername(willUpdateUser.getUsername());
+        updatedUser.setPassword(willUpdateUser.getPassword());
+        updatedUser.setFirst_name(willUpdateUser.getFirst_name());
+        updatedUser.setLast_name(willUpdateUser.getLast_name());
+        updatedUser.setGender(willUpdateUser.getGender());
+        updatedUser.setStatus(willUpdateUser.getStatus());
+        updatedUser.setRole_type_id(willUpdateUser.getRole_type_id());
+        updatedUser.setTraining_topic_id(willUpdateUser.getTraining_topic_id());
+        updatedUser.setUpdated_at(willUpdateUser.getUpdated_at());
+
+        return updatedUser;
     }
 
     @Override

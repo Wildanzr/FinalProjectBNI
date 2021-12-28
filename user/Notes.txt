@@ -3,3 +3,4 @@
 #3 - Adding swagger
 #4 - Implement eureka client
 #5 - Add input validator
+#6 - Add some validator and implement sequntial id

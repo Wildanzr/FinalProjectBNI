@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,7 +26,7 @@ public class ValidatorHandler extends ResponseEntityExceptionHandler {
 
             errors.put(fieldName, message);
         });
-        errors.put("message", "Bad Request");
+        errors.put("status", "400");
 
         return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
     }
