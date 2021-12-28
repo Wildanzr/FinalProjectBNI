@@ -1,6 +1,6 @@
 package com.wildannn.user.service;
 
-import com.wildannn.user.model.User;
+import com.wildannn.user.entity.User;
 
 import java.util.List;
 

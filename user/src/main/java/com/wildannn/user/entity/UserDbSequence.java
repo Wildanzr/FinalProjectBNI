@@ -1,15 +1,15 @@
-package com.wildannn.user.model;
+package com.wildannn.user.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("database_sequences")
+@Document("user_db_sequence")
 @Data
-public class DatabaseSequence {
+public class UserDbSequence {
 
     @Id
     private String id;
 
-    private long seq;
+    private Long seq;
 }

@@ -1,4 +1,4 @@
-package com.wildannn.user.payload;
+package com.wildannn.user.handler;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

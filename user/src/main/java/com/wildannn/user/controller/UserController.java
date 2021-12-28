@@ -1,6 +1,6 @@
 package com.wildannn.user.controller;
 
-import com.wildannn.user.model.User;
+import com.wildannn.user.entity.User;
 import com.wildannn.user.payload.UserResponse;
 import com.wildannn.user.payload.ErrorResponse;
 import com.wildannn.user.service.UserService;
@@ -23,7 +23,7 @@ public class UserController {
     public ResponseEntity<?> listUser() {
         List<User> userList = userService.findAll();
         UserResponse response = UserResponse.builder()
-                .message("Success get all usersss")
+                .message("Success get all user")
                 .data(userList)
                 .build();
 
@@ -49,7 +49,7 @@ public class UserController {
                     .status(404)
                     .build();
 
-            return ResponseEntity.status(404).body(error);
+            return ResponseEntity.status(error.getStatus()).body(error);
         }
     }
 
@@ -72,7 +72,7 @@ public class UserController {
                     .status(404)
                     .build();
 
-            return ResponseEntity.status(404).body(error);
+            return ResponseEntity.status(error.getStatus()).body(error);
         }
     }
 
@@ -95,7 +95,7 @@ public class UserController {
                     .status(404)
                     .build();
 
-            return ResponseEntity.status(404).body(error);
+            return ResponseEntity.status(error.getStatus()).body(error);
         }
     }
 
@@ -117,7 +117,7 @@ public class UserController {
                     .status(404)
                     .build();
 
-            return ResponseEntity.status(404).body(error);
+            return ResponseEntity.status(error.getStatus()).body(error);
         }
     }
 }

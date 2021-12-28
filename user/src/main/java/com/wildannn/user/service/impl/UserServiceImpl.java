@@ -1,6 +1,7 @@
 package com.wildannn.user.service.impl;
 
-import com.wildannn.user.model.User;
+import com.wildannn.user.entity.User;
+import com.wildannn.user.generator.IdGenerator;
 import com.wildannn.user.repository.UserRepository;
 import com.wildannn.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private final UserRepository userRepository;
-    private final SequenceGeneratorService sequenceGeneratorService;
+    private final IdGenerator idGenerator;
 
     @Override
     public User create(User user) {
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService{
     //Membuat objek user
     @Override
     public User makeUser(User user) {
-        String sequenceID = String.valueOf(sequenceGeneratorService.generateSequence(User.SEQUENCE_NAME));
+        String sequenceID = String.valueOf(idGenerator.generateUserId(User.SEQUENCE_NAME));
 
         User newUser = User.builder()
                 .id(sequenceID)

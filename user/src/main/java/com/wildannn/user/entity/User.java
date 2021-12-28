@@ -1,4 +1,4 @@
-package com.wildannn.user.model;
+package com.wildannn.user.entity;
 
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.Date;
 public class User {
 
     @Transient
-    public static final String SEQUENCE_NAME = "users_sequence";
+    public static final String SEQUENCE_NAME = "user_db_sequence";
 
     @Id
     private String id;
