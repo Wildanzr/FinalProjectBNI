@@ -21,35 +21,37 @@ public class User {
     @Id
     private String id;
 
-    @NotEmpty
+    @NotEmpty(message = "Email tidak boleh kosong")
     @Email(message = "Penulisan alamat email tidak valid")
     private String email;
 
-    @NotEmpty
+    @NotEmpty(message = "Username tidak boleh kosong")
     @Size(min=3, max=20, message = "Username harus terdiri dari 3 hingga 20 karakter")
     private String username;
 
-    @NotEmpty
+    @NotEmpty(message = "Password tidak boleh kosong")
     @Size(min=8, max=50, message = "Password harus terdiri dari 8 hingga 50 karakter")
     private String password;
 
-    @NotEmpty
+    @NotEmpty(message = "First_name tidak boleh kosong")
     @Size(min=1, max=100, message = "Firstname harus terdiri dari 1 hingga 100 karakter")
     private String first_name;
 
-    @NotEmpty
+    @NotEmpty(message = "Last_name tidak boleh kosong")
     @Size(min=1, max=100, message = "Lastname harus terdiri dari 1 hingga 100 karakter")
     private String last_name;
     
-    @NotEmpty
+    @NotEmpty(message = "Gender tidak boleh kosong")
     @Size(max=1, message = "Gender harus terdiri dari 1 karakter L/P")
     private String gender;
 
     private Integer status;
 
+    @NotNull(message = "Role type tidak boleh kosong")
     @Max(9)
     private Integer role_type_id;
 
+    @NotNull(message = "Training topic tidak boleh kosong")
     @Max(9)
     private Integer training_topic_id;
 
