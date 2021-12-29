@@ -1,13 +1,14 @@
 package com.wildannn.user.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@Builder
 public class UserRoleModel {
     private String id;
     private String name;
-    private Date created_at;
-    private Date updated_at;
+    private Date since;
 }

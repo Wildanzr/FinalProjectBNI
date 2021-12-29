@@ -8,3 +8,4 @@
 #8 - Add checking email (email should uniq)
 #9 - Merge service user-roles
 #10 - Fix merge service user_roles
+#11 - Apply standard json:api to user service

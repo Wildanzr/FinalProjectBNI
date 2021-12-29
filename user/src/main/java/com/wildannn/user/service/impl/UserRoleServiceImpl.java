@@ -2,12 +2,14 @@ package com.wildannn.user.service.impl;
 
 import com.wildannn.user.entity.UserRole;
 import com.wildannn.user.generator.IdGenerator;
+import com.wildannn.user.handler.ErrorMessage;
 import com.wildannn.user.repository.UserRoleRepository;
 import com.wildannn.user.service.UserRoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,8 +34,6 @@ public class UserRoleServiceImpl implements UserRoleService {
         UserRole newUserRole = UserRole.builder()
                 .id(sequenceID)
                 .name(userRole.getName())
-                .created_at(userRole.getCreated_at())
-                .updated_at(userRole.getUpdated_at())
                 .build();
 
         return newUserRole;
@@ -47,7 +47,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public UserRole findById(String id) {
         return userRoleRepository.findById(id).orElseThrow(() -> {
-            throw new RuntimeException("Not Found!");
+            throw new RuntimeException(ErrorMessage.NOT_FOUND);
         });
     }
 
@@ -55,7 +55,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     public UserRole update(String id, UserRole userRole) {
         UserRole updated = this.findById(id);
         updated.setName(userRole.getName());
-        updated.setUpdated_at(userRole.getUpdated_at());
+        updated.setUpdated_at(new Date());
 
         return userRoleRepository.save(updated);
     }

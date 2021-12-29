@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,6 +19,8 @@ public class UserRoleController {
 
     @PostMapping
     public ResponseEntity<?> createUserRole(@RequestBody UserRole userRole) {
+        List<UserRole> userRoleList = new ArrayList<>();
+
         UserRole newUserRole = userRoleService.create(userRole);
         return ResponseEntity.ok(newUserRole);
     }

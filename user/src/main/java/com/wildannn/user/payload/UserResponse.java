@@ -1,6 +1,7 @@
 package com.wildannn.user.payload;
 
 import com.wildannn.user.entity.User;
+import com.wildannn.user.model.UserModel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,10 +15,10 @@ public class UserResponse {
     private Boolean success = true;
     private String message;
     private Date timestamp = new Date();
-    private List<User> data;
+    private List<UserModel> data;
 
     @Builder
-    public UserResponse(String message, List<User> data) {
+    public UserResponse(String message, List<UserModel> data) {
         this.message = message;
         this.data = data;
     }
