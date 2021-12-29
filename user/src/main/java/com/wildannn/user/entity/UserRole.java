@@ -28,7 +28,6 @@ public class UserRole {
 
     private Date created_at;
     private Date updated_at;
-    private Date deleted_at;
 
     @Builder
     public UserRole(String id, String name, Date created_at, Date updated_at) {

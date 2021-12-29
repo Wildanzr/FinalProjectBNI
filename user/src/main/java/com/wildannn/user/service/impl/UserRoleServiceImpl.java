@@ -1,20 +1,42 @@
 package com.wildannn.user.service.impl;
 
 import com.wildannn.user.entity.UserRole;
+import com.wildannn.user.generator.IdGenerator;
 import com.wildannn.user.repository.UserRoleRepository;
 import com.wildannn.user.service.UserRoleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class UserRoleServiceImpl implements UserRoleService {
 
     @Autowired
     private UserRoleRepository userRoleRepository;
+    private final IdGenerator idGenerator;
 
     @Override
     public UserRole create(UserRole userRole) {
-        return userRoleRepository.save(userRole);
+        UserRole userRole1 = this.makeUserRole(userRole);
+
+        return userRoleRepository.save(userRole1);
+    }
+
+    @Override
+    public UserRole makeUserRole(UserRole userRole) {
+        String sequenceID = String.valueOf(idGenerator.generateUseRoleId(UserRole.SEQUENCE_NAME));
+
+        UserRole newUserRole = UserRole.builder()
+                .id(sequenceID)
+                .name(userRole.getName())
+                .created_at(userRole.getCreated_at())
+                .updated_at(userRole.getUpdated_at())
+                .build();
+
+        return newUserRole;
     }
 
     @Override
