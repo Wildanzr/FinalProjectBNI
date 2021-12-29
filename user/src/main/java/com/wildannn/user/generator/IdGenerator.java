@@ -1,7 +1,6 @@
 package com.wildannn.user.generator;
 
-import com.wildannn.user.entity.UserDbSequence;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.wildannn.user.entity.DbSequence;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
@@ -16,20 +15,23 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 @Service
 public class IdGenerator {
 
-    @Autowired
-    private MongoOperations mongoOperations;
+    private final MongoOperations mongoOperations;
+
+    public IdGenerator(MongoOperations mongoOperations) {
+        this.mongoOperations = mongoOperations;
+    }
 
     public Long generateUserId(String seqName) {
-        UserDbSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
+        DbSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
                 new Update().inc("seq",1), options().returnNew(true).upsert(true),
-                UserDbSequence.class);
+                DbSequence.class);
         return !Objects.isNull(counter) ? counter.getSeq() : 1;
     }
 
     public Long generateUseRoleId(String seqName) {
-        UserDbSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
+        DbSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
                 new Update().inc("seq",1), options().returnNew(true).upsert(true),
-                UserDbSequence.class);
+                DbSequence.class);
         return !Objects.isNull(counter) ? counter.getSeq() : 1;
     }
 }

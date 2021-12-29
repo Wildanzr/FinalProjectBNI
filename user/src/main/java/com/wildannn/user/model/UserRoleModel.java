@@ -10,5 +10,5 @@ import java.util.Date;
 public class UserRoleModel {
     private String id;
     private String name;
-    private Date since;
+    private Date createdAt;
 }

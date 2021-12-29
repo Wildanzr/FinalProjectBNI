@@ -1,5 +1,6 @@
 package com.wildannn.user.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,12 +12,22 @@ public class UserModel {
     private String id;
     private String email;
     private String username;
-    private String first_name;
-    private String last_name;
+
+    @JsonProperty("first_name")
+    private String firstName;
+
+    @JsonProperty("last_name")
+    private String lastName;
+
     private String gender;
     private Integer status;
-    private UserRoleModel user_role;
-    private Integer training_topic_id;
-    private Date created_at;
-    private Date updated_at;
+
+    @JsonProperty("user_role")
+    private UserRoleModel userRoleModel;
+
+    @JsonProperty("training_topic_id")
+    private Integer trainingTopic;
+
+    private Date createdAt;
+    private Date updatedAt;
 }

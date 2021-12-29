@@ -1,15 +1,19 @@
 package com.wildannn.user.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("db_sequence")
+@Document("training_topics")
 @Data
-public class UserRoleDbSequence {
+@Builder
+public class TrainingTopic {
 
     @Id
     private String id;
 
-    private Long seq;
+    private String name;
+    private String enrollCode;
+    private String description;
 }

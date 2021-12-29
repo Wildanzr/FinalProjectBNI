@@ -10,6 +10,7 @@ import com.wildannn.user.payload.ErrorResponse;
 import com.wildannn.user.service.UserRoleService;
 import com.wildannn.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@Log4j2
 public class UserController {
 
     private final UserService userService;
@@ -43,7 +45,7 @@ public class UserController {
         try {
             List<UserModel> userList = new ArrayList<>();
             User user = userService.findById(id);
-            UserRole role = userRoleService.findById(String.valueOf(user.getRole_type_id()));
+            UserRole role = userRoleService.findById(String.valueOf(user.getRoleTypeId()));
             UserModel userModel = this.userToUserModel(role, user);
 
             userList.add(userModel);
@@ -56,7 +58,7 @@ public class UserController {
         } catch (Exception ex) {
             ErrorResponse error = new ErrorResponse();
 
-            if(ex.equals(ErrorMessage.NOT_FOUND)) {
+            if(ex.getMessage().equals(ErrorMessage.NOT_FOUND)) {
                 error = ErrorResponse.builder()
                         .message(ErrorMessage.NOT_FOUND)
                         .status(404)
@@ -71,11 +73,16 @@ public class UserController {
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
         try {
             List<UserModel> userList = new ArrayList<>();
+            log.info("Pass");
             User newUser = userService.create(user);
-            UserRole role = userRoleService.findById(String.valueOf(newUser.getRole_type_id()));
+            log.info("Pass");
+            UserRole role = userRoleService.findById(String.valueOf(newUser.getRoleTypeId()));
+            log.info("Pass");
             UserModel userModel = this.userToUserModel(role, newUser);
+            log.info("Pass");
 
             userList.add(userModel);
+            log.info("Pass");
             UserResponse response = UserResponse.builder()
                     .message("Success created user")
                     .data(userList)
@@ -85,7 +92,7 @@ public class UserController {
         } catch (Exception ex) {
             ErrorResponse error = new ErrorResponse();
 
-            if(ex.equals(ErrorMessage.NOT_FOUND)) {
+            if(ex.getMessage().equals(ErrorMessage.NOT_FOUND)) {
                 error = ErrorResponse.builder()
                         .message(ErrorMessage.NOT_FOUND)
                         .status(404)
@@ -101,7 +108,7 @@ public class UserController {
         try {
             List<UserModel> userList = new ArrayList<>();
             User updatedUser = userService.update(id, user);
-            UserRole role = userRoleService.findById(String.valueOf(updatedUser.getRole_type_id()));
+            UserRole role = userRoleService.findById(String.valueOf(updatedUser.getRoleTypeId()));
             UserModel model = this.userToUserModel(role, updatedUser);
 
             userList.add(model);
@@ -114,7 +121,7 @@ public class UserController {
         } catch (Exception ex) {
             ErrorResponse error = new ErrorResponse();
 
-            if(ex.equals(ErrorMessage.NOT_FOUND)) {
+            if(ex.getMessage().equals(ErrorMessage.NOT_FOUND)) {
                 error = ErrorResponse.builder()
                         .message(ErrorMessage.NOT_FOUND)
                         .status(404)
@@ -140,7 +147,7 @@ public class UserController {
         } catch (Exception ex) {
             ErrorResponse error = new ErrorResponse();
 
-            if(ex.equals(ErrorMessage.NOT_FOUND)) {
+            if(ex.getMessage().equals(ErrorMessage.NOT_FOUND)) {
                 error = ErrorResponse.builder()
                         .message(ErrorMessage.NOT_FOUND)
                         .status(404)
@@ -154,21 +161,19 @@ public class UserController {
     private UserModel userToUserModel(UserRole role, User user) {
         UserRoleModel userRoleModel = this.userRoleToUserRoleModel(role);
 
-        UserModel userModel = UserModel.builder()
+        return UserModel.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .first_name(user.getFirst_name())
-                .last_name(user.getLast_name())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .gender(user.getGender())
                 .status(user.getStatus())
-                .user_role(userRoleModel)
-                .training_topic_id(user.getTraining_topic_id())
-                .created_at(user.getCreated_at())
-                .updated_at(user.getUpdated_at())
+                .userRoleModel(userRoleModel)
+                .trainingTopic(user.getTrainingTopicId())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
                 .build();
-
-        return userModel;
     }
 
     private List<UserModel> usersToUserMolels(List<User> users) {
@@ -176,7 +181,7 @@ public class UserController {
         List<UserRole> roles = userRoleService.findAll();
 
         for(User a : users) {
-            UserRole role = roles.get(a.getRole_type_id()-1);
+            UserRole role = roles.get(a.getRoleTypeId()-1);
             UserModel model = this.userToUserModel(role, a);
             userList.add(model);
         }
@@ -185,12 +190,11 @@ public class UserController {
     }
 
     private UserRoleModel userRoleToUserRoleModel(UserRole userRole) {
-        UserRoleModel userRoleModel1 = UserRoleModel.builder()
+
+        return UserRoleModel.builder()
                 .id(userRole.getId())
                 .name(userRole.getName())
-                .since(userRole.getCreated_at())
+                .createdAt(userRole.getCreatedAt())
                 .build();
-
-        return userRoleModel1;
     }
 }

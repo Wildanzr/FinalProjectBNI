@@ -1,6 +1,5 @@
 package com.wildannn.user.payload;
 
-import com.wildannn.user.entity.User;
 import com.wildannn.user.model.UserModel;
 import lombok.Builder;
 import lombok.Data;

@@ -17,7 +17,7 @@ import java.util.Date;
 public class UserRole {
 
     @Transient
-    public static final String SEQUENCE_NAME = "user_roles_sequence";
+    public static final String SEQUENCE = "user_roles_sequence";
 
     @Id
     private String id;
@@ -26,14 +26,14 @@ public class UserRole {
     @Size(min = 3, max = 50, message = "Role name must be at least 3  and below 50 characters")
     private String name;
 
-    private Date created_at;
-    private Date updated_at;
+    private Date createdAt;
+    private Date updatedAt;
 
     @Builder
     public UserRole(String id, String name) {
         this.id = id;
         this.name = name;
-        this.created_at = new Date();
-        this.updated_at = new Date();
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
     }
 }

@@ -28,6 +28,6 @@ public class ValidatorHandler extends ResponseEntityExceptionHandler {
         });
         errors.put("status", "400");
 
-        return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

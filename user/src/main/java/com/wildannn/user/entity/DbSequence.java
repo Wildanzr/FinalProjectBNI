@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("db_sequence")
 @Data
-public class UserDbSequence {
+public class DbSequence {
 
     @Id
     private String id;

@@ -29,14 +29,12 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public UserRole makeUserRole(UserRole userRole) {
-        String sequenceID = String.valueOf(idGenerator.generateUseRoleId(UserRole.SEQUENCE_NAME));
+        String sequenceID = String.valueOf(idGenerator.generateUseRoleId(UserRole.SEQUENCE));
 
-        UserRole newUserRole = UserRole.builder()
+        return UserRole.builder()
                 .id(sequenceID)
                 .name(userRole.getName())
                 .build();
-
-        return newUserRole;
     }
 
     @Override
@@ -55,7 +53,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     public UserRole update(String id, UserRole userRole) {
         UserRole updated = this.findById(id);
         updated.setName(userRole.getName());
-        updated.setUpdated_at(new Date());
+        updated.setUpdatedAt(new Date());
 
         return userRoleRepository.save(updated);
     }

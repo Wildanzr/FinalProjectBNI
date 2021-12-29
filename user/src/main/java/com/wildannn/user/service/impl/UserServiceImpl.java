@@ -34,21 +34,19 @@ public class UserServiceImpl implements UserService{
     //Membuat objek user
     @Override
     public User makeUser(User user) {
-        String sequenceID = String.valueOf(idGenerator.generateUserId(User.SEQUENCE_NAME));
+        String sequenceID = String.valueOf(idGenerator.generateUserId(User.SEQUENCE));
 
-        User newUser = User.builder()
+        return User.builder()
                 .id(sequenceID)
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .first_name(user.getFirst_name())
-                .last_name(user.getLast_name())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .gender(user.getGender())
-                .role_type_id(user.getRole_type_id())
-                .training_topic_id(user.getTraining_topic_id())
+                .roleTypeId(user.getRoleTypeId())
+                .trainingTopicId(user.getTrainingTopicId())
                 .build();
-
-        return newUser;
     }
 
     @Override
@@ -78,13 +76,13 @@ public class UserServiceImpl implements UserService{
         updatedUser.setEmail(willUpdateUser.getEmail());
         updatedUser.setUsername(willUpdateUser.getUsername());
         updatedUser.setPassword(willUpdateUser.getPassword());
-        updatedUser.setFirst_name(willUpdateUser.getFirst_name());
-        updatedUser.setLast_name(willUpdateUser.getLast_name());
+        updatedUser.setFirstName(willUpdateUser.getFirstName());
+        updatedUser.setLastName(willUpdateUser.getLastName());
         updatedUser.setGender(willUpdateUser.getGender());
         updatedUser.setStatus(willUpdateUser.getStatus());
-        updatedUser.setRole_type_id(willUpdateUser.getRole_type_id());
-        updatedUser.setTraining_topic_id(willUpdateUser.getTraining_topic_id());
-        updatedUser.setUpdated_at(willUpdateUser.getUpdated_at());
+        updatedUser.setRoleTypeId(willUpdateUser.getRoleTypeId());
+        updatedUser.setTrainingTopicId(willUpdateUser.getTrainingTopicId());
+        updatedUser.setUpdatedAt(willUpdateUser.getUpdatedAt());
 
         return updatedUser;
     }

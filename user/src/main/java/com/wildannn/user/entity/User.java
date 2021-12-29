@@ -16,7 +16,7 @@ import java.util.Date;
 public class User {
 
     @Transient
-    public static final String SEQUENCE_NAME = "user_db_sequence";
+    public static final String SEQUENCE = "user_db_sequence";
 
     @Id
     private String id;
@@ -35,11 +35,11 @@ public class User {
 
     @NotEmpty(message = "First_name tidak boleh kosong")
     @Size(min=1, max=100, message = "Firstname harus terdiri dari 1 hingga 100 karakter")
-    private String first_name;
+    private String firstName;
 
-    @NotEmpty(message = "Last_name tidak boleh kosong")
+    @NotEmpty(message = "lastName tidak boleh kosong")
     @Size(min=1, max=100, message = "Lastname harus terdiri dari 1 hingga 100 karakter")
-    private String last_name;
+    private String lastName;
     
     @NotEmpty(message = "Gender tidak boleh kosong")
     @Size(max=1, message = "Gender harus terdiri dari 1 karakter L/P")
@@ -49,30 +49,30 @@ public class User {
 
     @NotNull(message = "Role type tidak boleh kosong")
     @Max(9)
-    private Integer role_type_id;
+    private Integer roleTypeId;
 
     @NotNull(message = "Training topic tidak boleh kosong")
     @Max(9)
-    private Integer training_topic_id;
+    private Integer trainingTopicId;
 
-    private Date created_at;
-    private Date updated_at;
+    private Date createdAt;
+    private Date updatedAt;
 
     @Builder
-    public User(String id,String email, String username, String password, String first_name, String last_name, String gender, Integer role_type_id, Integer training_topic_id) {
+    public User(String id,String email, String username, String password, String firstName, String lastName, String gender, Integer roleTypeId, Integer trainingTopicId) {
         this.id = id;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.gender = gender;
-        this.role_type_id = role_type_id;
-        this.training_topic_id = training_topic_id;
+        this.roleTypeId = roleTypeId;
+        this.trainingTopicId = trainingTopicId;
 
         //Diisi oleh sistem
         this.status = 0;
-        this.created_at = new Date();
-        this.updated_at = new Date();
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
     }
 }
