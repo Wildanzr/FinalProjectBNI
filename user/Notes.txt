@@ -13,4 +13,5 @@
 #13 - Add jsonproperty convention
 #14 - Add trainingtopic base service
 #15 - Restructure json api
-#16 - EPIC 1 0f 10 Enrollment
+#16 - Story 1 of 10 enrollment
+#17 - Story 2 of 10 10 update basic info
