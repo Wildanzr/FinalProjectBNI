@@ -22,6 +22,9 @@ public class ErrorMessageService {
         else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.USERNAME_REGISTERED))
             return errorModifier(response, ErrorMessage.USERNAME_REGISTERED, 400);
 
+        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.WRONG_ENROLL_CODE))
+            return errorModifier(response, ErrorMessage.WRONG_ENROLL_CODE, 400);
+
         return response;
     }
 

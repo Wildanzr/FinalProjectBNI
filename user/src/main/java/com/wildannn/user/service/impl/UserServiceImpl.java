@@ -1,14 +1,19 @@
 package com.wildannn.user.service.impl;
 
 import com.wildannn.user.entity.User;
+import com.wildannn.user.entity.UserRole;
 import com.wildannn.user.generator.IdGenerator;
 import com.wildannn.user.handler.ErrorMessage;
+import com.wildannn.user.model.UserModel;
+import com.wildannn.user.model.UserRoleModel;
 import com.wildannn.user.repository.UserRepository;
+import com.wildannn.user.service.UserRoleService;
 import com.wildannn.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +23,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private final UserRepository userRepository;
     private final IdGenerator idGenerator;
+    private final UserRoleService userRoleService;
 
     @Override
     public User create(User user) {
@@ -46,7 +52,6 @@ public class UserServiceImpl implements UserService{
                 .lastName(user.getLastName())
                 .gender(user.getGender())
                 .roleTypeId(user.getRoleTypeId())
-                .trainingTopicId(user.getTrainingTopicId())
                 .build();
     }
 
@@ -82,7 +87,6 @@ public class UserServiceImpl implements UserService{
         updatedUser.setGender(willUpdateUser.getGender());
         updatedUser.setStatus(willUpdateUser.getStatus());
         updatedUser.setRoleTypeId(willUpdateUser.getRoleTypeId());
-        updatedUser.setTrainingTopicId(willUpdateUser.getTrainingTopicId());
         updatedUser.setUpdatedAt(willUpdateUser.getUpdatedAt());
 
         return updatedUser;
@@ -92,5 +96,44 @@ public class UserServiceImpl implements UserService{
     public void delete(String id) {
         User deletedUser = this.findById(id);
         userRepository.delete(deletedUser);
+    }
+
+    @Override
+    public UserRoleModel getModel(User user) {
+        List<UserRole> models = userRoleService.findAll();
+        UserRole role = models.get(user.getRoleTypeId()-1);
+        UserRoleModel model = userRoleService.convertToModel(role);
+
+        return model;
+    }
+
+    @Override
+    public UserModel convertToModel(UserRoleModel role, User user) {
+        return UserModel.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .gender(user.getGender())
+                .status(user.getStatus())
+                .userRoleModel(role)
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public List<UserModel> convertToModels(List<User> users) {
+        List<UserModel> models = new ArrayList<>();
+        List<UserRole> roles = userRoleService.findAll();
+
+        for(User a : users) {
+            UserRoleModel role = this.getModel(a);
+            UserModel model = this.convertToModel(role, a);
+            models.add(model);
+        }
+
+        return models;
     }
 }

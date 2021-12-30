@@ -25,8 +25,8 @@ public class UserModel {
     @JsonProperty("user_role")
     private UserRoleModel userRoleModel;
 
-    @JsonProperty("training_topic_id")
-    private Integer trainingTopic;
+    @JsonProperty("training_topics")
+    private TrainingTopicModel topics;
 
     @JsonProperty("created_at")
     private Date createdAt;

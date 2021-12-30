@@ -55,11 +55,6 @@ public class User {
     @JsonProperty("role_type_id")
     private Integer roleTypeId;
 
-    @NotNull(message = "Training topic tidak boleh kosong")
-    @Max(9)
-    @JsonProperty("training_topic_id")
-    private Integer trainingTopicId;
-
     @JsonProperty("created_at")
     private Date createdAt;
 
@@ -67,7 +62,7 @@ public class User {
     private Date updatedAt;
 
     @Builder
-    public User(String id,String email, String username, String password, String firstName, String lastName, String gender, Integer roleTypeId, Integer trainingTopicId) {
+    public User(String id,String email, String username, String password, String firstName, String lastName, String gender, Integer roleTypeId) {
         this.id = id;
         this.email = email;
         this.username = username;
@@ -76,7 +71,6 @@ public class User {
         this.lastName = lastName;
         this.gender = gender;
         this.roleTypeId = roleTypeId;
-        this.trainingTopicId = trainingTopicId;
 
         //Diisi oleh sistem
         this.status = 0;
