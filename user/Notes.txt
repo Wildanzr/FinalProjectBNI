@@ -12,3 +12,4 @@
 #12 - Change naming convention
 #13 - Add jsonproperty convention
 #14 - Add trainingtopic base service
+#15 - Restructure json api

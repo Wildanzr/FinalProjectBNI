@@ -2,6 +2,7 @@ package com.wildannn.user.payload;
 
 import com.wildannn.user.model.TrainingTopicModel;
 import com.wildannn.user.model.UserModel;
+import com.wildannn.user.model.UserRoleModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,23 @@ public class ResponseService {
 
     public TrainingTopicResponse makeTrainingTopicsResponse(String message, List<TrainingTopicModel> modelList) {
         return TrainingTopicResponse.builder()
+                .message(message)
+                .data(modelList)
+                .build();
+    }
+
+    public UserRoleResponse makeUserRoleResponse(String message, UserRoleModel model) {
+        List<UserRoleModel> modelList = new ArrayList<>();
+        modelList.add(model);
+
+        return UserRoleResponse.builder()
+                .message(message)
+                .data(modelList)
+                .build();
+    }
+
+    public UserRoleResponse makeUserRolesResponse(String message, List<UserRoleModel> modelList) {
+        return UserRoleResponse.builder()
                 .message(message)
                 .data(modelList)
                 .build();

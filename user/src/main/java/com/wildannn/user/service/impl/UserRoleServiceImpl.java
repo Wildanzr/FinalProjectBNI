@@ -3,12 +3,14 @@ package com.wildannn.user.service.impl;
 import com.wildannn.user.entity.UserRole;
 import com.wildannn.user.generator.IdGenerator;
 import com.wildannn.user.handler.ErrorMessage;
+import com.wildannn.user.model.UserRoleModel;
 import com.wildannn.user.repository.UserRoleRepository;
 import com.wildannn.user.service.UserRoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -61,5 +63,25 @@ public class UserRoleServiceImpl implements UserRoleService {
         UserRole deleted = this.findById(id);
 
         userRoleRepository.delete(deleted);
+    }
+
+    @Override
+    public UserRoleModel convertToModel(UserRole role) {
+        return UserRoleModel.builder()
+                .id(role.getId())
+                .name(role.getName())
+                .build();
+    }
+
+    @Override
+    public List<UserRoleModel> convertToModels(List<UserRole> roles) {
+        List<UserRoleModel> models = new ArrayList<>();
+
+        for(UserRole a : roles) {
+            UserRoleModel model = this.convertToModel(a);
+            models.add(model);
+        }
+
+        return models;
     }
 }
