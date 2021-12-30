@@ -1,5 +1,8 @@
 package com.wildannn.user.handler;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class ErrorMessage {
     public final static String NOT_FOUND = "Data tidak ditemukan";
     public final static String EMAIL_REGISTERED = "Alamat email telah didaftarkan";

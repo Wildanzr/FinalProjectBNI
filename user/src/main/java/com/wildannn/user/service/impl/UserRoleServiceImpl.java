@@ -29,7 +29,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public UserRole makeUserRole(UserRole userRole) {
-        String sequenceID = String.valueOf(idGenerator.generateUseRoleId(UserRole.SEQUENCE));
+        String sequenceID = String.valueOf(idGenerator.generateId(UserRole.SEQUENCE));
 
         return UserRole.builder()
                 .id(sequenceID)
@@ -44,9 +44,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public UserRole findById(String id) {
-        return userRoleRepository.findById(id).orElseThrow(() -> {
-            throw new RuntimeException(ErrorMessage.NOT_FOUND);
-        });
+        return userRoleRepository.findById(id).orElseThrow(() -> new RuntimeException(ErrorMessage.NOT_FOUND));
     }
 
     @Override
@@ -61,6 +59,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public void delete(String id) {
         UserRole deleted = this.findById(id);
+
         userRoleRepository.delete(deleted);
     }
 }

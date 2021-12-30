@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService{
     //Membuat objek user
     @Override
     public User makeUser(User user) {
-        String sequenceID = String.valueOf(idGenerator.generateUserId(User.SEQUENCE));
+        String sequenceID = String.valueOf(idGenerator.generateId(User.SEQUENCE));
 
         return User.builder()
                 .id(sequenceID)

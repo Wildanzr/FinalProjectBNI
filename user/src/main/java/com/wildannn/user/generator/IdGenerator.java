@@ -21,14 +21,7 @@ public class IdGenerator {
         this.mongoOperations = mongoOperations;
     }
 
-    public Long generateUserId(String seqName) {
-        DbSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
-                new Update().inc("seq",1), options().returnNew(true).upsert(true),
-                DbSequence.class);
-        return !Objects.isNull(counter) ? counter.getSeq() : 1;
-    }
-
-    public Long generateUseRoleId(String seqName) {
+    public Long generateId(String seqName) {
         DbSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
                 new Update().inc("seq",1), options().returnNew(true).upsert(true),
                 DbSequence.class);
