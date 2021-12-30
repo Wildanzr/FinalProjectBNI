@@ -56,14 +56,7 @@ public class UserController {
 
             return ResponseEntity.ok(response);
         } catch (Exception ex) {
-            ErrorResponse error = new ErrorResponse();
-
-            if(ex.getMessage().equals(ErrorMessage.NOT_FOUND)) {
-                error = ErrorResponse.builder()
-                        .message(ErrorMessage.NOT_FOUND)
-                        .status(404)
-                        .build();
-            }
+            ErrorResponse error = errorDefinition(ex);
 
             return ResponseEntity.status(error.getStatus()).body(error);
         }
@@ -73,31 +66,19 @@ public class UserController {
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
         try {
             List<UserModel> userList = new ArrayList<>();
-            log.info("Pass");
             User newUser = userService.create(user);
-            log.info("Pass");
             UserRole role = userRoleService.findById(String.valueOf(newUser.getRoleTypeId()));
-            log.info("Pass");
             UserModel userModel = this.userToUserModel(role, newUser);
-            log.info("Pass");
 
             userList.add(userModel);
-            log.info("Pass");
             UserResponse response = UserResponse.builder()
                     .message("Success created user")
                     .data(userList)
                     .build();
 
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(201).body(response);
         } catch (Exception ex) {
-            ErrorResponse error = new ErrorResponse();
-
-            if(ex.getMessage().equals(ErrorMessage.NOT_FOUND)) {
-                error = ErrorResponse.builder()
-                        .message(ErrorMessage.NOT_FOUND)
-                        .status(404)
-                        .build();
-            }
+            ErrorResponse error = errorDefinition(ex);
 
             return ResponseEntity.status(error.getStatus()).body(error);
         }
@@ -119,14 +100,7 @@ public class UserController {
 
             return ResponseEntity.ok(response);
         } catch (Exception ex) {
-            ErrorResponse error = new ErrorResponse();
-
-            if(ex.getMessage().equals(ErrorMessage.NOT_FOUND)) {
-                error = ErrorResponse.builder()
-                        .message(ErrorMessage.NOT_FOUND)
-                        .status(404)
-                        .build();
-            }
+            ErrorResponse error = errorDefinition(ex);
 
             return ResponseEntity.status(error.getStatus()).body(error);
         }
@@ -145,14 +119,7 @@ public class UserController {
 
             return ResponseEntity.ok(response);
         } catch (Exception ex) {
-            ErrorResponse error = new ErrorResponse();
-
-            if(ex.getMessage().equals(ErrorMessage.NOT_FOUND)) {
-                error = ErrorResponse.builder()
-                        .message(ErrorMessage.NOT_FOUND)
-                        .status(404)
-                        .build();
-            }
+            ErrorResponse error = errorDefinition(ex);
 
             return ResponseEntity.status(error.getStatus()).body(error);
         }
@@ -196,5 +163,30 @@ public class UserController {
                 .name(userRole.getName())
                 .createdAt(userRole.getCreatedAt())
                 .build();
+    }
+
+    private ErrorResponse errorDefinition(Exception ex) {
+        ErrorResponse response = ErrorResponse.builder()
+                .message("Internal Server Error")
+                .status(500)
+                .build();
+
+        if(ex.getMessage().equalsIgnoreCase(ErrorMessage.NOT_FOUND))
+            return errorModifier(response, ErrorMessage.NOT_FOUND, 404);
+
+        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.EMAIL_REGISTERED))
+            return errorModifier(response, ErrorMessage.EMAIL_REGISTERED, 400);
+
+        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.USERNAME_REGISTERED))
+            return errorModifier(response, ErrorMessage.USERNAME_REGISTERED, 400);
+
+        return response;
+    }
+
+    private ErrorResponse errorModifier(ErrorResponse response, String message, Integer status) {
+        response.setMessage(message);
+        response.setStatus(status);
+
+        return response;
     }
 }

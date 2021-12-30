@@ -1,5 +1,6 @@
 package com.wildannn.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,10 +36,12 @@ public class User {
 
     @NotEmpty(message = "First_name tidak boleh kosong")
     @Size(min=1, max=100, message = "Firstname harus terdiri dari 1 hingga 100 karakter")
+    @JsonProperty("first_name")
     private String firstName;
 
     @NotEmpty(message = "lastName tidak boleh kosong")
     @Size(min=1, max=100, message = "Lastname harus terdiri dari 1 hingga 100 karakter")
+    @JsonProperty("last_name")
     private String lastName;
     
     @NotEmpty(message = "Gender tidak boleh kosong")
@@ -49,13 +52,18 @@ public class User {
 
     @NotNull(message = "Role type tidak boleh kosong")
     @Max(9)
+    @JsonProperty("role_type_id")
     private Integer roleTypeId;
 
     @NotNull(message = "Training topic tidak boleh kosong")
     @Max(9)
+    @JsonProperty("training_topic_id")
     private Integer trainingTopicId;
 
+    @JsonProperty("created_at")
     private Date createdAt;
+
+    @JsonProperty("updated_at")
     private Date updatedAt;
 
     @Builder

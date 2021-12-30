@@ -2,6 +2,7 @@ package com.wildannn.user.service.impl;
 
 import com.wildannn.user.entity.User;
 import com.wildannn.user.generator.IdGenerator;
+import com.wildannn.user.handler.ErrorMessage;
 import com.wildannn.user.repository.UserRepository;
 import com.wildannn.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,9 @@ public class UserServiceImpl implements UserService{
     public User create(User user) {
         //Mengecek apakah sudah ada user dengan alamat email yang akan didaftarkan
         if (userRepository.findByEmail(user.getEmail()).isPresent())
-            throw new RuntimeException("Alamat email telah didaftarkan");
+            throw new RuntimeException(ErrorMessage.EMAIL_REGISTERED);
          else if(userRepository.findByUsername(user.getUsername()).isPresent())
-             throw new RuntimeException("Username telah digunakan");
+             throw new RuntimeException(ErrorMessage.USERNAME_REGISTERED);
 
         User newUser = this.makeUser(user);
 
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findById(String id) {
         return userRepository.findById(id).orElseThrow(()-> {
-            throw new RuntimeException("User id:" +id+ " not found.");
+            throw new RuntimeException(ErrorMessage.NOT_FOUND);
         });
     }
 

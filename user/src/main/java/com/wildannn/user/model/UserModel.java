@@ -28,6 +28,9 @@ public class UserModel {
     @JsonProperty("training_topic_id")
     private Integer trainingTopic;
 
+    @JsonProperty("created_at")
     private Date createdAt;
+
+    @JsonProperty("updated_at")
     private Date updatedAt;
 }
