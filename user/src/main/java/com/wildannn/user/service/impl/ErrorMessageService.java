@@ -25,6 +25,12 @@ public class ErrorMessageService {
         else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.WRONG_ENROLL_CODE))
             return errorModifier(response, ErrorMessage.WRONG_ENROLL_CODE, 400);
 
+        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.HAVE_ENROLLED))
+            return errorModifier(response, ErrorMessage.HAVE_ENROLLED, 400);
+
+        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.NOT_ENROLLED))
+            return errorModifier(response, ErrorMessage.NOT_ENROLLED, 400);
+
         return response;
     }
 

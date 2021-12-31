@@ -1,5 +1,6 @@
 package com.wildannn.user.payload;
 
+import com.wildannn.user.model.EnrollModel;
 import com.wildannn.user.model.TrainingTopicModel;
 import com.wildannn.user.model.UserModel;
 import com.wildannn.user.model.UserRoleModel;
@@ -59,6 +60,16 @@ public class ResponseService {
 
     public UserRoleResponse makeUserRolesResponse(String message, List<UserRoleModel> modelList) {
         return UserRoleResponse.builder()
+                .message(message)
+                .data(modelList)
+                .build();
+    }
+
+    public EnrollResponse makeEnrollResponse(String message, EnrollModel model) {
+        List<EnrollModel> modelList = new ArrayList<>();
+        modelList.add(model);
+
+        return EnrollResponse.builder()
                 .message(message)
                 .data(modelList)
                 .build();
