@@ -6,3 +6,5 @@
 #6 - Has adding post-stats-service
 #7 - Will add spring security
 #8 - CrowdAcademy as discovery service
+#9 - Merge base user service
+#10 - Story 3 of 10 enrollment
