@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -150,5 +151,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> getUnapprovedUsers() {
         return userRepository.findAllByStatus(0);
+    }
+
+    @Override
+    public User approveUser(String userId) {
+        User approved = this.findById(userId);
+        approved.setStatus(1);
+        approved.setUpdatedAt(new Date());
+        userRepository.save(approved);
+
+        return approved;
     }
 }

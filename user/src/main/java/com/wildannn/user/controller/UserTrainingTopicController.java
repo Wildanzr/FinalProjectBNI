@@ -38,7 +38,8 @@ public class UserTrainingTopicController {
 
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {
-            ErrorResponse error = errorMessageService.errorDefinition(ex);
+            ErrorResponse error = errorMessageService
+                    .errorDefinition(ex);
 
             return ResponseEntity.status(error.getStatus()).body(error);
         }
