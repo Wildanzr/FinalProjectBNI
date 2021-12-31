@@ -3,6 +3,7 @@ package com.wildannn.user.service.impl;
 import com.wildannn.user.entity.TrainingTopic;
 import com.wildannn.user.entity.UserTrainingTopic;
 import com.wildannn.user.handler.ErrorMessage;
+import com.wildannn.user.model.EnrollModel;
 import com.wildannn.user.model.Password;
 import com.wildannn.user.model.TrainingTopicModel;
 import com.wildannn.user.repository.UserTrainingTopicRepository;
@@ -73,6 +74,15 @@ public class UserTrainingTopicServiceImpl implements UserTrainingTopicService {
         return TrainingTopicModel.builder()
                 .id(String.valueOf(topic.getTrainingTopicId()))
                 .name(topic.getTrainingTopicName())
+                .build();
+    }
+
+    @Override
+    public EnrollModel convertToEnrollModel(UserTrainingTopic topic, Integer userId) {
+        return EnrollModel.builder()
+                .userId(userId)
+                .trainingTopicId(topic.getTrainingTopicId())
+                .trainingTopicName(topic.getTrainingTopicName())
                 .build();
     }
 }

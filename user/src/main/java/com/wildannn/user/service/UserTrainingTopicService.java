@@ -2,6 +2,7 @@ package com.wildannn.user.service;
 
 import com.wildannn.user.entity.TrainingTopic;
 import com.wildannn.user.entity.UserTrainingTopic;
+import com.wildannn.user.model.EnrollModel;
 import com.wildannn.user.model.Password;
 import com.wildannn.user.model.TrainingTopicModel;
 
@@ -13,4 +14,6 @@ public interface UserTrainingTopicService {
     void unEnrollTopic(Integer userId, TrainingTopic topic);
     TrainingTopicModel convertToTrainingTopicModel(UserTrainingTopic topic);
     List<TrainingTopicModel> convertToTrainingTopicModels(List<UserTrainingTopic> topics);
+
+    EnrollModel convertToEnrollModel(UserTrainingTopic topic, Integer userId);
 }
