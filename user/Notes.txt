@@ -1,0 +1,19 @@
+#1 - Initialize user service project
+#2 - Implement base service
+#3 - Adding swagger
+#4 - Implement eureka client
+#5 - Add input validator
+#6 - Add some validator and implement sequential id
+#7 - Add empty or null validator
+#8 - Add checking email (email should uniq)
+#9 - Merge service user-roles
+#10 - Fix merge service user_roles
+#11 - Apply standard json:api to user service
+#12 - Change naming convention
+#13 - Add jsonproperty convention
+#14 - Add trainingtopic base service
+#15 - Restructure json api
+#16 - Story 1 of 10 enrollment
+#17 - Story 2 of 10 10 update basic info
+#18 - Story 1 of 10 enrollment
+#19 - Fix multiple enroll topic
