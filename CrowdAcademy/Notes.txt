@@ -5,3 +5,4 @@
 #5 - Has adding comment-service
 #6 - Has adding post-stats-service
 #7 - Will add spring security
+#8 - CrowdAcademy as discovery service
