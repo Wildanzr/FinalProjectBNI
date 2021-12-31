@@ -146,4 +146,9 @@ public class UserServiceImpl implements UserService{
 
         return models;
     }
+
+    @Override
+    public List<User> getUnapprovedUsers() {
+        return userRepository.findAllByStatus(0);
+    }
 }
