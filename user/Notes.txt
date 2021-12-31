@@ -19,3 +19,4 @@
 #19 - Fix multiple enroll topic
 #20 - Fix enrollment status
 #21 - Fix enrollment with wrong user and multiple enrollment
+#22 - Add unenroll topic

@@ -37,7 +37,7 @@ public class UserTrainingTopicServiceImpl implements UserTrainingTopicService {
         }
 
         //Jika user ada, akan dicek apakah masih ada enroll topic yang sama
-        if(topicsRepository.findByUserIdAndTrainingTopicId(userId, topicId, true).isPresent())
+        if(topicsRepository.findByUserIdAndTrainingTopicId(userId, topicId).isPresent())
             throw new RuntimeException(ErrorMessage.HAVE_ENROLLED);
 
         //Jika tidak ada data duplikasi, maka akan dicek apakah password enroll telah sesuai
@@ -62,16 +62,13 @@ public class UserTrainingTopicServiceImpl implements UserTrainingTopicService {
 
     @Override
     public void unEnrollTopic(Integer userId, Integer topicId) {
-        if(!topicsRepository.findByUserIdAndTrainingTopicId(userId, topicId, true).isPresent()) {
-            log.info("MULAI");
-            topicsRepository.findByUserIdAndTrainingTopicId(userId,
-                    Integer.valueOf(topicId));
-            log.info("AKHIR");
-        }
-        else {
-            log.info("TIDAK ADA");
+        if(userRepository.findById(String.valueOf(userId)).isEmpty())
+            throw new RuntimeException(ErrorMessage.NOT_FOUND);
+
+        if(topicsRepository.findByUserIdAndTrainingTopicId(userId, topicId).isEmpty())
             throw new RuntimeException(ErrorMessage.NOT_ENROLLED);
-        }
+
+        topicsRepository.deleteByUserIdAndTrainingTopicId(userId, topicId);
     }
 
     @Override
