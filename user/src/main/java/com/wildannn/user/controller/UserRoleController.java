@@ -1,6 +1,7 @@
 package com.wildannn.user.controller;
 
 import com.wildannn.user.entity.UserRole;
+import com.wildannn.user.handler.MessageResponse;
 import com.wildannn.user.model.UserRoleModel;
 import com.wildannn.user.payload.ErrorResponse;
 import com.wildannn.user.payload.ResponseService;
@@ -27,7 +28,7 @@ public class UserRoleController {
         UserRole role = userRoleService.create(userRole);
         UserRoleModel model = userRoleService.convertToModel(role);
         UserRoleResponse response = responseService
-                .makeUserRoleResponse("Success create role", model);
+                .makeUserRoleResponse(MessageResponse.CREATED_ROLE, model);
 
         return ResponseEntity.status(201).body(response);
     }
@@ -37,7 +38,7 @@ public class UserRoleController {
         List<UserRole> roles = userRoleService.findAll();
         List<UserRoleModel> modelList = userRoleService.convertToModels(roles);
         UserRoleResponse response = responseService
-                .makeUserRolesResponse("Success get all role", modelList);
+                .makeUserRolesResponse(MessageResponse.ALL_ROLE, modelList);
 
         return ResponseEntity.ok(response);
     }
@@ -48,7 +49,7 @@ public class UserRoleController {
             UserRole role = userRoleService.findById(id);
             UserRoleModel model = userRoleService.convertToModel(role);
             UserRoleResponse response = responseService
-                    .makeUserRoleResponse("Success update role id:"+id, model);
+                    .makeUserRoleResponse(MessageResponse.ONE_ROLE, model);
 
             return ResponseEntity.ok(response);
         } catch (Exception ex) {
@@ -64,7 +65,7 @@ public class UserRoleController {
             UserRole updated = userRoleService.update(id, userRole);
             UserRoleModel model = userRoleService.convertToModel(updated);
             UserRoleResponse response = responseService
-                    .makeUserRoleResponse("Success update role id:"+id, model);
+                    .makeUserRoleResponse(MessageResponse.UPDATED_ROLE, model);
 
             return ResponseEntity.ok(response);
         } catch (Exception ex) {
@@ -79,7 +80,7 @@ public class UserRoleController {
         try {
             userRoleService.delete(id);
             UserRoleResponse response = responseService
-                    .makeUserRoleResponse("Success delete role id:"+id, null);
+                    .makeUserRoleResponse(MessageResponse.DELETED_ROLE, null);
 
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {

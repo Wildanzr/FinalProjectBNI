@@ -2,7 +2,7 @@ package com.wildannn.user.service.impl;
 
 import com.wildannn.user.entity.TrainingTopic;
 import com.wildannn.user.entity.UserTrainingTopic;
-import com.wildannn.user.handler.ErrorMessage;
+import com.wildannn.user.handler.MessageResponse;
 import com.wildannn.user.model.EnrollModel;
 import com.wildannn.user.model.Password;
 import com.wildannn.user.model.TrainingTopicModel;
@@ -33,12 +33,12 @@ public class UserTrainingTopicServiceImpl implements UserTrainingTopicService {
     public UserTrainingTopic enrollTopic(Integer userId, Integer topicId, Password password) {
         //Cek apakah user dengan id x ada
         if(userRepository.findById(String.valueOf(userId)).isEmpty()) {
-            throw new RuntimeException(ErrorMessage.NOT_FOUND);
+            throw new RuntimeException(MessageResponse.NOT_FOUND);
         }
 
         //Jika user ada, akan dicek apakah masih ada enroll topic yang sama
         if(topicsRepository.findByUserIdAndTrainingTopicId(userId, topicId).isPresent())
-            throw new RuntimeException(ErrorMessage.HAVE_ENROLLED);
+            throw new RuntimeException(MessageResponse.HAVE_ENROLLED);
 
         //Jika tidak ada data duplikasi, maka akan dicek apakah password enroll telah sesuai
         TrainingTopic topic = topicService.findById(String.valueOf(topicId));
@@ -51,7 +51,7 @@ public class UserTrainingTopicServiceImpl implements UserTrainingTopicService {
             return topicsRepository.save(enroll);
         }
         else
-            throw new RuntimeException(ErrorMessage.WRONG_ENROLL_CODE);
+            throw new RuntimeException(MessageResponse.WRONG_ENROLL_CODE);
     }
 
     @Override
@@ -63,10 +63,10 @@ public class UserTrainingTopicServiceImpl implements UserTrainingTopicService {
     @Override
     public void unEnrollTopic(Integer userId, Integer topicId) {
         if(userRepository.findById(String.valueOf(userId)).isEmpty())
-            throw new RuntimeException(ErrorMessage.NOT_FOUND);
+            throw new RuntimeException(MessageResponse.NOT_FOUND);
 
         if(topicsRepository.findByUserIdAndTrainingTopicId(userId, topicId).isEmpty())
-            throw new RuntimeException(ErrorMessage.NOT_ENROLLED);
+            throw new RuntimeException(MessageResponse.NOT_ENROLLED);
 
         topicsRepository.deleteByUserIdAndTrainingTopicId(userId, topicId);
     }

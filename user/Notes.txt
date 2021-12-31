@@ -23,3 +23,4 @@
 #23 - Get unapproved users
 #24 - Approve one users
 #25 - Approve many users
+#26 - Apply dictionary message response

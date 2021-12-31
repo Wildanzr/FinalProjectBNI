@@ -1,6 +1,7 @@
 package com.wildannn.user.controller;
 
 import com.wildannn.user.entity.User;
+import com.wildannn.user.handler.MessageResponse;
 import com.wildannn.user.model.UserModel;
 import com.wildannn.user.payload.ResponseService;
 import com.wildannn.user.payload.UserResponse;
@@ -30,7 +31,7 @@ public class UserController {
         List<User> users = userService.findAll();
         List<UserModel> userList = userService.convertToModels(users);
         UserResponse response = responseService.
-                makeUsersResponse("Success get all user", userList);
+                makeUsersResponse(MessageResponse.ALL_USER, userList);
 
         return ResponseEntity.ok(response);
     }
@@ -42,7 +43,7 @@ public class UserController {
             UserModel model = userService.convertToModel(user);
 
             UserResponse response = responseService.
-                    makeUserResponse("Success get user id:"+id, model);
+                    makeUserResponse(MessageResponse.USER, model);
 
             return ResponseEntity.ok(response);
         } catch (Exception ex) {
@@ -59,7 +60,7 @@ public class UserController {
             UserModel model = userService.convertToModel(newUser);
 
             UserResponse response = responseService.
-                    makeUserResponse("Success created user", model);
+                    makeUserResponse(MessageResponse.CREATED_USER, model);
 
             return ResponseEntity.status(201).body(response);
         } catch (Exception ex) {
@@ -76,7 +77,7 @@ public class UserController {
             UserModel model = userService.convertToModel(updatedUser);
 
             UserResponse response = responseService.
-                    makeUserResponse("Success updated user:"+id, model);
+                    makeUserResponse(MessageResponse.UPDATED_USER, model);
 
             return ResponseEntity.ok(response);
         } catch (Exception ex) {
@@ -91,7 +92,7 @@ public class UserController {
         try {
             userService.delete(id);
             UserResponse response = responseService.
-                    makeUserResponse("Success deleted user id"+id, null);
+                    makeUserResponse(MessageResponse.DELETED_USER, null);
 
             return ResponseEntity.ok(response);
         } catch (Exception ex) {

@@ -2,7 +2,7 @@ package com.wildannn.user.service.impl;
 
 import com.wildannn.user.entity.UserRole;
 import com.wildannn.user.generator.IdGenerator;
-import com.wildannn.user.handler.ErrorMessage;
+import com.wildannn.user.handler.MessageResponse;
 import com.wildannn.user.model.UserRoleModel;
 import com.wildannn.user.repository.UserRoleRepository;
 import com.wildannn.user.service.UserRoleService;
@@ -46,7 +46,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public UserRole findById(String id) {
-        return userRoleRepository.findById(id).orElseThrow(() -> new RuntimeException(ErrorMessage.NOT_FOUND));
+        return userRoleRepository.findById(id).orElseThrow(() -> new RuntimeException(MessageResponse.NOT_FOUND));
     }
 
     @Override

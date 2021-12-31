@@ -1,6 +1,7 @@
 package com.wildannn.user.controller;
 
 import com.wildannn.user.entity.UserTrainingTopic;
+import com.wildannn.user.handler.MessageResponse;
 import com.wildannn.user.model.EnrollModel;
 import com.wildannn.user.model.Password;
 import com.wildannn.user.payload.EnrollResponse;
@@ -34,7 +35,7 @@ public class UserTrainingTopicController {
             UserTrainingTopic enroll = topicService.enrollTopic(userId, topicId, password);
             EnrollModel model = topicService.convertToEnrollModel(enroll, userId);
             EnrollResponse response = responseService.
-                    makeEnrollResponse("Success enroll training topic", model);
+                    makeEnrollResponse(MessageResponse.SUCESS_ENROLL, model);
 
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {
@@ -52,7 +53,7 @@ public class UserTrainingTopicController {
             topicService.unEnrollTopic(userId, topicId);
 
             EnrollResponse response = responseService
-                    .makeEnrollResponse("Success unenroll training topic", null);
+                    .makeEnrollResponse(MessageResponse.SUCESS_UNENROLL, null);
 
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {

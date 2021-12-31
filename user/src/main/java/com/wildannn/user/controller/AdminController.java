@@ -1,7 +1,7 @@
 package com.wildannn.user.controller;
 
 import com.wildannn.user.entity.User;
-import com.wildannn.user.handler.ErrorMessage;
+import com.wildannn.user.handler.MessageResponse;
 import com.wildannn.user.model.UserModel;
 import com.wildannn.user.payload.ErrorResponse;
 import com.wildannn.user.payload.ResponseService;
@@ -28,7 +28,7 @@ public class AdminController {
         List<User> users = userService.getUnapprovedUsers();
         List<UserModel> userList = userService.convertToModels(users);
         UserResponse response = responseService.
-                makeUsersResponse("Success get all unapproved user", userList);
+                makeUsersResponse(MessageResponse.ALL_UNAPPROVED_USER, userList);
 
         return ResponseEntity.ok(response);
     }
@@ -39,7 +39,7 @@ public class AdminController {
             User user = userService.approveUser(userId, true);
             UserModel model = userService.convertToModel(user);
             UserResponse response = responseService.
-                    makeUserResponse("Success approve user id:"+userId, model);
+                    makeUserResponse(MessageResponse.SUCCESS_APPROVE, model);
 
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {
@@ -52,7 +52,7 @@ public class AdminController {
     @PatchMapping("/approve")
     public ResponseEntity<?> approveUsers(@RequestBody List<Integer> iDs) {
         if(iDs.isEmpty()) {
-            Exception ex = new Exception(ErrorMessage.EMPTY_IDS);
+            Exception ex = new Exception(MessageResponse.EMPTY_IDS);
             ErrorResponse error = errorMessageService.errorDefinition(ex);
 
             return ResponseEntity.status(error.getStatus()).body(error);
@@ -62,7 +62,7 @@ public class AdminController {
             List<User> users = userService.approveUsers(iDs);
             List<UserModel> models = userService.convertToModels(users);
             UserResponse response = responseService
-                    .makeUsersResponse("Success approve all user", models);
+                    .makeUsersResponse(MessageResponse.SUCCESS_APPROVE_ALL, models);
 
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {
