@@ -1,7 +1,7 @@
 package com.wildannn.user.service;
 
 import com.wildannn.user.entity.User;
-import com.wildannn.user.entity.UserRole;
+import com.wildannn.user.model.TrainingTopicModel;
 import com.wildannn.user.model.UserModel;
 import com.wildannn.user.model.UserRoleModel;
 
@@ -16,7 +16,8 @@ public interface UserService {
     void delete(String id);
 
     User makeUser(User user);
-    UserRoleModel getModel(User user);
-    UserModel convertToModel(UserRoleModel role, User user);
+    UserRoleModel getRoleModel(User user);
+    List<TrainingTopicModel> getTopicsModel(User user);
+    UserModel convertToModel(User user);
     List<UserModel> convertToModels(List<User> users);
 }

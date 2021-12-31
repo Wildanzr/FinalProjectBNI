@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -26,7 +27,7 @@ public class UserModel {
     private UserRoleModel userRoleModel;
 
     @JsonProperty("training_topics")
-    private TrainingTopicModel topics;
+    private List<TrainingTopicModel> topics;
 
     @JsonProperty("created_at")
     private Date createdAt;

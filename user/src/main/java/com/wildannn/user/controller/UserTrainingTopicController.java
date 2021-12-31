@@ -29,7 +29,7 @@ public class UserTrainingTopicController {
         try {
             UserTrainingTopic enroll = topicService.enrollTopic(userId, topicId, password);
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(enroll);
         }catch (Exception ex) {
             ErrorResponse error = errorMessageService.errorDefinition(ex);
 

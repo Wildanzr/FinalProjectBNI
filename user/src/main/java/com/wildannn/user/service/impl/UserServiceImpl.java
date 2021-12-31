@@ -2,13 +2,16 @@ package com.wildannn.user.service.impl;
 
 import com.wildannn.user.entity.User;
 import com.wildannn.user.entity.UserRole;
+import com.wildannn.user.entity.UserTrainingTopic;
 import com.wildannn.user.generator.IdGenerator;
 import com.wildannn.user.handler.ErrorMessage;
+import com.wildannn.user.model.TrainingTopicModel;
 import com.wildannn.user.model.UserModel;
 import com.wildannn.user.model.UserRoleModel;
 import com.wildannn.user.repository.UserRepository;
 import com.wildannn.user.service.UserRoleService;
 import com.wildannn.user.service.UserService;
+import com.wildannn.user.service.UserTrainingTopicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,7 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final IdGenerator idGenerator;
     private final UserRoleService userRoleService;
+    private final UserTrainingTopicService userTrainingTopicService;
 
     @Override
     public User create(User user) {
@@ -99,16 +103,23 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserRoleModel getModel(User user) {
+    public UserRoleModel getRoleModel(User user) {
         List<UserRole> models = userRoleService.findAll();
         UserRole role = models.get(user.getRoleTypeId()-1);
-        UserRoleModel model = userRoleService.convertToModel(role);
 
-        return model;
+        return userRoleService.convertToModel(role);
     }
 
     @Override
-    public UserModel convertToModel(UserRoleModel role, User user) {
+    public List<TrainingTopicModel> getTopicsModel(User user) {
+        List<UserTrainingTopic> topics = userTrainingTopicService
+                .enrolledTopics(Integer.valueOf(user.getId()));
+
+        return userTrainingTopicService.convertToTrainingTopicModels(topics);
+    }
+
+    @Override
+    public UserModel convertToModel(User user) {
         return UserModel.builder()
                 .id(user.getId())
                 .username(user.getUsername())
@@ -117,7 +128,8 @@ public class UserServiceImpl implements UserService{
                 .lastName(user.getLastName())
                 .gender(user.getGender())
                 .status(user.getStatus())
-                .userRoleModel(role)
+                .userRoleModel(this.getRoleModel(user))
+                .topics(this.getTopicsModel(user))
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();
@@ -126,11 +138,9 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<UserModel> convertToModels(List<User> users) {
         List<UserModel> models = new ArrayList<>();
-        List<UserRole> roles = userRoleService.findAll();
 
         for(User a : users) {
-            UserRoleModel role = this.getModel(a);
-            UserModel model = this.convertToModel(role, a);
+            UserModel model = this.convertToModel(a);
             models.add(model);
         }
 

@@ -4,6 +4,7 @@ import com.wildannn.user.entity.TrainingTopic;
 import com.wildannn.user.entity.UserTrainingTopic;
 import com.wildannn.user.handler.ErrorMessage;
 import com.wildannn.user.model.Password;
+import com.wildannn.user.model.TrainingTopicModel;
 import com.wildannn.user.repository.UserTrainingTopicRepository;
 import com.wildannn.user.service.TrainingTopicService;
 import com.wildannn.user.service.UserTrainingTopicService;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,5 +55,24 @@ public class UserTrainingTopicServiceImpl implements UserTrainingTopicService {
                 Integer.valueOf(topic.getId()));
 
         topicsRepository.delete(unEnroll);
+    }
+
+    @Override
+    public List<TrainingTopicModel> convertToTrainingTopicModels(List<UserTrainingTopic> topics) {
+        List<TrainingTopicModel> models = new ArrayList<>();
+
+        for(UserTrainingTopic a : topics) {
+            models.add(convertToTrainingTopicModel(a));
+        }
+
+        return models;
+    }
+
+    @Override
+    public TrainingTopicModel convertToTrainingTopicModel(UserTrainingTopic topic) {
+        return TrainingTopicModel.builder()
+                .id(String.valueOf(topic.getTrainingTopicId()))
+                .name(topic.getTrainingTopicName())
+                .build();
     }
 }

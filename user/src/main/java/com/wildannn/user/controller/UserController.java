@@ -2,7 +2,6 @@ package com.wildannn.user.controller;
 
 import com.wildannn.user.entity.User;
 import com.wildannn.user.model.UserModel;
-import com.wildannn.user.model.UserRoleModel;
 import com.wildannn.user.payload.ResponseService;
 import com.wildannn.user.payload.UserResponse;
 import com.wildannn.user.payload.ErrorResponse;
@@ -40,8 +39,7 @@ public class UserController {
     public ResponseEntity<?> findUser (@PathVariable("id") String id) {
         try {
             User user = userService.findById(id);
-            UserRoleModel role = userService.getModel(user);
-            UserModel model = userService.convertToModel(role, user);
+            UserModel model = userService.convertToModel(user);
 
             UserResponse response = responseService.
                     makeUserResponse("Success get user id:"+id, model);
@@ -58,8 +56,7 @@ public class UserController {
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
         try {
             User newUser = userService.create(user);
-            UserRoleModel role = userService.getModel(newUser);
-            UserModel model = userService.convertToModel(role, newUser);
+            UserModel model = userService.convertToModel(newUser);
 
             UserResponse response = responseService.
                     makeUserResponse("Success created user", model);
@@ -76,8 +73,7 @@ public class UserController {
     public ResponseEntity<?> updateUser(@PathVariable("id") String id, @Valid @RequestBody User user) {
         try {
             User updatedUser = userService.update(id, user);
-            UserRoleModel role = userService.getModel(updatedUser);
-            UserModel model = userService.convertToModel(role, updatedUser);
+            UserModel model = userService.convertToModel(updatedUser);
 
             UserResponse response = responseService.
                     makeUserResponse("Success updated user:"+id, model);
