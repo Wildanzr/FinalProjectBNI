@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface UserTrainingTopicRepository extends MongoRepository<UserTrainingTopic, String> {
     List<UserTrainingTopic> findAllByUserId(Integer userId);
     UserTrainingTopic findByUserIdAndTrainingTopicId(Integer userId, Integer topicId);
-    Optional<UserTrainingTopic> findByUserIdAndTrainingTopicId(Integer userId, String topicId);
+    Optional<UserTrainingTopic> findByUserIdAndTrainingTopicId(Integer userId, Integer topicId, Boolean del);
     List<TrainingTopicModel> findAllByUserId(String userId);
 }

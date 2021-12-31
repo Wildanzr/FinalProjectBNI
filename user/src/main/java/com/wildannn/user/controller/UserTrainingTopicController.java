@@ -27,7 +27,7 @@ public class UserTrainingTopicController {
 
     @PostMapping("/enroll/{userId}/{topicId}")
     public ResponseEntity<?> enrollTopic(@PathVariable("userId") Integer userId,
-                                         @PathVariable("topicId") String topicId,
+                                         @PathVariable("topicId") Integer topicId,
                                          @Valid @RequestBody Password password) {
 
         try {
@@ -37,11 +37,27 @@ public class UserTrainingTopicController {
                     makeEnrollResponse("Success enroll training topic", model);
 
             return ResponseEntity.ok().body(response);
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             ErrorResponse error = errorMessageService.errorDefinition(ex);
 
             return ResponseEntity.status(error.getStatus()).body(error);
         }
+    }
 
+    @DeleteMapping("/unenroll/{userId}/{topicId}")
+    public ResponseEntity<?> unenrollTopic(@PathVariable("userId") Integer userId,
+                                           @PathVariable("topicId") Integer topicId) {
+        try {
+            topicService.unEnrollTopic(userId, topicId);
+
+            EnrollResponse response = responseService
+                    .makeEnrollResponse("Success unenroll training topic", null);
+
+            return ResponseEntity.ok().body(response);
+        } catch (Exception ex) {
+            ErrorResponse error = errorMessageService.errorDefinition(ex);
+
+            return ResponseEntity.status(error.getStatus()).body(error);
+        }
     }
 }
