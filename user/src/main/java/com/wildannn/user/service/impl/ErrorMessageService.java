@@ -31,6 +31,12 @@ public class ErrorMessageService {
         else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.NOT_ENROLLED))
             return errorModifier(response, ErrorMessage.NOT_ENROLLED, 400);
 
+        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.AN_ID_NOT_FOUND))
+            return errorModifier(response, ErrorMessage.AN_ID_NOT_FOUND, 404);
+
+        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.EMPTY_IDS))
+            return errorModifier(response, ErrorMessage.EMPTY_IDS, 400);
+
         return response;
     }
 

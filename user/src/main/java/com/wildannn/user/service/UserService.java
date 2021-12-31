@@ -24,5 +24,7 @@ public interface UserService {
     UserModel convertToModel(User user);
     List<UserModel> convertToModels(List<User> users);
     List<User> getUnapprovedUsers();
-    User approveUser(String userId);
+    User approveUser(String userId, Boolean isSolo);
+    List<User> approveUsers(List<Integer> userIds);
+    User approvalFindById(String id);
 }

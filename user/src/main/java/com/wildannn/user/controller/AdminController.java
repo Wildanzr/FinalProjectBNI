@@ -1,6 +1,7 @@
 package com.wildannn.user.controller;
 
 import com.wildannn.user.entity.User;
+import com.wildannn.user.handler.ErrorMessage;
 import com.wildannn.user.model.UserModel;
 import com.wildannn.user.payload.ErrorResponse;
 import com.wildannn.user.payload.ResponseService;
@@ -35,10 +36,33 @@ public class AdminController {
     @PatchMapping("/approve/{userId}")
     public ResponseEntity<?> approveUser(@PathVariable("userId") String userId) {
         try {
-            User user = userService.approveUser(userId);
+            User user = userService.approveUser(userId, true);
             UserModel model = userService.convertToModel(user);
             UserResponse response = responseService.
                     makeUserResponse("Success approve user id:"+userId, model);
+
+            return ResponseEntity.ok().body(response);
+        } catch (Exception ex) {
+            ErrorResponse error = errorMessageService.errorDefinition(ex);
+
+            return ResponseEntity.status(error.getStatus()).body(error);
+        }
+    }
+
+    @PatchMapping("/approve")
+    public ResponseEntity<?> approveUsers(@RequestBody List<Integer> iDs) {
+        if(iDs.isEmpty()) {
+            Exception ex = new Exception(ErrorMessage.EMPTY_IDS);
+            ErrorResponse error = errorMessageService.errorDefinition(ex);
+
+            return ResponseEntity.status(error.getStatus()).body(error);
+        }
+
+        try {
+            List<User> users = userService.approveUsers(iDs);
+            List<UserModel> models = userService.convertToModels(users);
+            UserResponse response = responseService
+                    .makeUsersResponse("Success approve all user", models);
 
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {

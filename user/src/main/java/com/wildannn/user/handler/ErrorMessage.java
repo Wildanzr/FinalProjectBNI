@@ -10,4 +10,6 @@ public class ErrorMessage {
     public final static String WRONG_ENROLL_CODE = "Kode enroll tidak sesuai";
     public final static String HAVE_ENROLLED = "Tidak bisa enroll pada training topic yang telah diambil";
     public final static String NOT_ENROLLED = "Tidak ada data enroll ditemukan";
+    public final static String AN_ID_NOT_FOUND = "Salah satu userId tidak ditemukan";
+    public final static String EMPTY_IDS = "Data user id tidak boleh kosong";
 }

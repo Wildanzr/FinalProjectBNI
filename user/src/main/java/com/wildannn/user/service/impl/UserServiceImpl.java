@@ -154,12 +154,36 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User approveUser(String userId) {
-        User approved = this.findById(userId);
+    public User approveUser(String userId, Boolean isSolo) {
+        User approved = null;
+        if(isSolo)
+            approved = this.findById(userId);
+        else
+            approved = this.approvalFindById(userId);
+
         approved.setStatus(1);
         approved.setUpdatedAt(new Date());
         userRepository.save(approved);
 
         return approved;
+    }
+
+    @Override
+    public List<User> approveUsers(List<Integer> userIds) {
+        List<User> approved = new ArrayList<>();
+
+        for(Integer a : userIds) {
+            User user = this.approveUser(String.valueOf(a), false);
+            approved.add(user);
+        }
+
+        return approved;
+    }
+
+    @Override
+    public User approvalFindById(String id) {
+        return userRepository.findById(id).orElseThrow(()-> {
+            throw new RuntimeException(ErrorMessage.AN_ID_NOT_FOUND);
+        });
     }
 }

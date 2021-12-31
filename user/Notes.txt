@@ -22,3 +22,4 @@
 #22 - Add unenroll topic
 #23 - Get unapproved users
 #24 - Approve one users
+#25 - Approve many users
