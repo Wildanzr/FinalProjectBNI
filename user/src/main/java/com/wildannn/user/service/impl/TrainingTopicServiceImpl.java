@@ -2,7 +2,7 @@ package com.wildannn.user.service.impl;
 
 import com.wildannn.user.entity.TrainingTopic;
 import com.wildannn.user.generator.IdGenerator;
-import com.wildannn.user.handler.ErrorMessage;
+import com.wildannn.user.handler.MessageResponse;
 import com.wildannn.user.model.TrainingTopicModel;
 import com.wildannn.user.repository.TrainingTopicRepository;
 import com.wildannn.user.service.TrainingTopicService;
@@ -43,7 +43,7 @@ public class TrainingTopicServiceImpl implements TrainingTopicService {
 
     @Override
     public TrainingTopic findById(String id) {
-        return topicRepository.findById(id).orElseThrow(() -> new RuntimeException(ErrorMessage.NOT_FOUND));
+        return topicRepository.findById(id).orElseThrow(() -> new RuntimeException(MessageResponse.NOT_FOUND));
     }
 
     @Override

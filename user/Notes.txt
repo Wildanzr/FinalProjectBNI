@@ -20,3 +20,8 @@
 #20 - Fix enrollment status
 #21 - Fix enrollment with wrong user and multiple enrollment
 #22 - Add unenroll topic
+#23 - Get unapproved users
+#24 - Approve one users
+#25 - Approve many users
+#26 - Apply dictionary message response
+#27 - Restructure branch

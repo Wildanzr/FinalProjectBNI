@@ -1,6 +1,6 @@
 package com.wildannn.user.service.impl;
 
-import com.wildannn.user.handler.ErrorMessage;
+import com.wildannn.user.handler.MessageResponse;
 import com.wildannn.user.payload.ErrorResponse;
 import org.springframework.stereotype.Service;
 
@@ -13,23 +13,29 @@ public class ErrorMessageService {
                 .status(500)
                 .build();
 
-        if(ex.getMessage().equalsIgnoreCase(ErrorMessage.NOT_FOUND))
-            return errorModifier(response, ErrorMessage.NOT_FOUND, 404);
+        if(ex.getMessage().equalsIgnoreCase(MessageResponse.NOT_FOUND))
+            return errorModifier(response, MessageResponse.NOT_FOUND, 404);
 
-        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.EMAIL_REGISTERED))
-            return errorModifier(response, ErrorMessage.EMAIL_REGISTERED, 400);
+        else if(ex.getMessage().equalsIgnoreCase(MessageResponse.EMAIL_REGISTERED))
+            return errorModifier(response, MessageResponse.EMAIL_REGISTERED, 400);
 
-        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.USERNAME_REGISTERED))
-            return errorModifier(response, ErrorMessage.USERNAME_REGISTERED, 400);
+        else if(ex.getMessage().equalsIgnoreCase(MessageResponse.USERNAME_REGISTERED))
+            return errorModifier(response, MessageResponse.USERNAME_REGISTERED, 400);
 
-        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.WRONG_ENROLL_CODE))
-            return errorModifier(response, ErrorMessage.WRONG_ENROLL_CODE, 400);
+        else if(ex.getMessage().equalsIgnoreCase(MessageResponse.WRONG_ENROLL_CODE))
+            return errorModifier(response, MessageResponse.WRONG_ENROLL_CODE, 400);
 
-        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.HAVE_ENROLLED))
-            return errorModifier(response, ErrorMessage.HAVE_ENROLLED, 400);
+        else if(ex.getMessage().equalsIgnoreCase(MessageResponse.HAVE_ENROLLED))
+            return errorModifier(response, MessageResponse.HAVE_ENROLLED, 400);
 
-        else if(ex.getMessage().equalsIgnoreCase(ErrorMessage.NOT_ENROLLED))
-            return errorModifier(response, ErrorMessage.NOT_ENROLLED, 400);
+        else if(ex.getMessage().equalsIgnoreCase(MessageResponse.NOT_ENROLLED))
+            return errorModifier(response, MessageResponse.NOT_ENROLLED, 400);
+
+        else if(ex.getMessage().equalsIgnoreCase(MessageResponse.AN_ID_NOT_FOUND))
+            return errorModifier(response, MessageResponse.AN_ID_NOT_FOUND, 404);
+
+        else if(ex.getMessage().equalsIgnoreCase(MessageResponse.EMPTY_IDS))
+            return errorModifier(response, MessageResponse.EMPTY_IDS, 400);
 
         return response;
     }

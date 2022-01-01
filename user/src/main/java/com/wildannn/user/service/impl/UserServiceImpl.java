@@ -4,7 +4,7 @@ import com.wildannn.user.entity.User;
 import com.wildannn.user.entity.UserRole;
 import com.wildannn.user.entity.UserTrainingTopic;
 import com.wildannn.user.generator.IdGenerator;
-import com.wildannn.user.handler.ErrorMessage;
+import com.wildannn.user.handler.MessageResponse;
 import com.wildannn.user.model.TrainingTopicModel;
 import com.wildannn.user.model.UserModel;
 import com.wildannn.user.model.UserRoleModel;
@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,9 +34,9 @@ public class UserServiceImpl implements UserService{
     public User create(User user) {
         //Mengecek apakah sudah ada user dengan alamat email yang akan didaftarkan
         if (userRepository.findByEmail(user.getEmail()).isPresent())
-            throw new RuntimeException(ErrorMessage.EMAIL_REGISTERED);
+            throw new RuntimeException(MessageResponse.EMAIL_REGISTERED);
          else if(userRepository.findByUsername(user.getUsername()).isPresent())
-             throw new RuntimeException(ErrorMessage.USERNAME_REGISTERED);
+             throw new RuntimeException(MessageResponse.USERNAME_REGISTERED);
 
         User newUser = this.makeUser(user);
 
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findById(String id) {
         return userRepository.findById(id).orElseThrow(()-> {
-            throw new RuntimeException(ErrorMessage.NOT_FOUND);
+            throw new RuntimeException(MessageResponse.NOT_FOUND);
         });
     }
 
@@ -145,5 +146,44 @@ public class UserServiceImpl implements UserService{
         }
 
         return models;
+    }
+
+    @Override
+    public List<User> getUnapprovedUsers() {
+        return userRepository.findAllByStatus(0);
+    }
+
+    @Override
+    public User approveUser(String userId, Boolean isSolo) {
+        User approved = null;
+        if(isSolo)
+            approved = this.findById(userId);
+        else
+            approved = this.approvalFindById(userId);
+
+        approved.setStatus(1);
+        approved.setUpdatedAt(new Date());
+        userRepository.save(approved);
+
+        return approved;
+    }
+
+    @Override
+    public List<User> approveUsers(List<Integer> userIds) {
+        List<User> approved = new ArrayList<>();
+
+        for(Integer a : userIds) {
+            User user = this.approveUser(String.valueOf(a), false);
+            approved.add(user);
+        }
+
+        return approved;
+    }
+
+    @Override
+    public User approvalFindById(String id) {
+        return userRepository.findById(id).orElseThrow(()-> {
+            throw new RuntimeException(MessageResponse.AN_ID_NOT_FOUND);
+        });
     }
 }
