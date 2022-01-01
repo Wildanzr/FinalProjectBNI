@@ -4,10 +4,11 @@ import com.wildannn.user.entity.User;
 import com.wildannn.user.model.TrainingTopicModel;
 import com.wildannn.user.model.UserModel;
 import com.wildannn.user.model.UserRoleModel;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     //CRUD basic
     User create(User user);
