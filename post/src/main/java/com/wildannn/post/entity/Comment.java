@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -36,10 +38,14 @@ public class Comment {
     @JsonProperty("user_id")
     private Integer userId;
 
+    @CreationTimestamp
     @Column(name = "created_at")
+    @JsonProperty("created_at")
     private Date createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
+    @JsonProperty("updated_at")
     private Date updatedAt;
 
     @Builder
@@ -48,9 +54,5 @@ public class Comment {
         this.comment = comment;
         this.postId = postId;
         this.userId = userId;
-
-        Date now = new Date();
-        this.createdAt = now;
-        this.updatedAt = now;
     }
 }

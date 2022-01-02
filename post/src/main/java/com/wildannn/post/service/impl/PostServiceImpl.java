@@ -1,6 +1,7 @@
 package com.wildannn.post.service.impl;
 
 import com.wildannn.post.entity.Post;
+import com.wildannn.post.handler.MessageResponse;
 import com.wildannn.post.repository.PostRepository;
 import com.wildannn.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post findById(Long id) {
         return postRepository.findById(id).orElseThrow(()-> {
-            throw new RuntimeException("Not found!");
+            throw new RuntimeException(MessageResponse.POST_NOT_FOUND);
         });
     }
 

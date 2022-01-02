@@ -1,5 +1,6 @@
 package com.wildannn.post.payload;
 
+import com.wildannn.post.entity.Comment;
 import com.wildannn.post.entity.Post;
 import com.wildannn.post.payload.PostResponse;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,23 @@ public class ResponseService {
         return PostResponse.builder()
                 .message(message)
                 .data(posts)
+                .build();
+    }
+
+    public CommentResponse makeCommentResponse(String message, Comment comment) {
+        List<Comment> model = new ArrayList<>();
+        model.add(comment);
+
+        return CommentResponse.builder()
+                .message(message)
+                .data(model)
+                .build();
+    }
+
+    public CommentResponse makeCommentsResponse(String message, List<Comment> comments) {
+        return CommentResponse.builder()
+                .message(message)
+                .data(comments)
                 .build();
     }
 }

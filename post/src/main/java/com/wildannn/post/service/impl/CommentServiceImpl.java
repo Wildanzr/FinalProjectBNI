@@ -5,6 +5,7 @@ import com.wildannn.post.handler.MessageResponse;
 import com.wildannn.post.repository.CommentRepository;
 import com.wildannn.post.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
+    @Autowired
     private final CommentRepository commentRepository;
 
     @Override
