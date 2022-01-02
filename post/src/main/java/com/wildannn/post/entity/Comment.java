@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -13,46 +11,46 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "posts")
-public class Post {
+@Table(name = "comments")
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Content tidak boleh kosong")
-    @Size(min = 1, max = 1000, message = "Konten terdiri dari 1 hingga 1000 karakter")
+    @NotEmpty(message = "Komentar tidak boleh kosong")
+    @Size(min = 1, max = 255, message = "Komentar terdiri dari 1 hingga 255 karakter")
     @Column(columnDefinition = "TEXT")
-    private String content;
+    private String comment;
+
+    @NotNull(message = "Post ID tidak boleh kosong")
+    @Column(name = "post_id")
+    @JsonProperty("post_id")
+    private Integer postId;
 
     @NotNull(message = "User ID tidak boleh kosong")
     @Column(name = "user_id")
     @JsonProperty("user_id")
-    private Long userId;
-
-    @NotNull(message = "Trainig topic ID tidak boleh kosong")
-    @Column(name = "training_topic_id")
-    @JsonProperty("training_topic_id")
-    private Integer trainingTopicId;
+    private Integer userId;
 
     @Column(name = "created_at")
-    @JsonProperty("created_at")
-    @CreationTimestamp
     private Date createdAt;
 
     @Column(name = "updated_at")
-    @JsonProperty("updated_at")
-    @UpdateTimestamp
     private Date updatedAt;
 
     @Builder
-    public Post(String content, Long userId, Integer trainingTopicId) {
-        this.content = content;
+    public Comment(Long id, String comment, Integer postId, Integer userId) {
+        this.id = id;
+        this.comment = comment;
+        this.postId = postId;
         this.userId = userId;
-        this.trainingTopicId = trainingTopicId;
+
+        Date now = new Date();
+        this.createdAt = now;
+        this.updatedAt = now;
     }
 }

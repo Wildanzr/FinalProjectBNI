@@ -29,7 +29,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findPost(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> findPost(@PathVariable("id") Long id) {
         try {
             Post post = postService.findById(id);
             return ResponseEntity.ok(post);
@@ -40,7 +40,7 @@ public class PostController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updatePost(@PathVariable("id") Integer id, @RequestBody Post post) {
+    public ResponseEntity<?> updatePost(@PathVariable("id") Long id, @RequestBody Post post) {
         try {
             Post updated = postService.update(id, post);
             return ResponseEntity.ok(updated);
@@ -51,7 +51,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePost(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deletePost(@PathVariable("id") Long id) {
         try {
             postService.delete(id);
             return ResponseEntity.ok().build();

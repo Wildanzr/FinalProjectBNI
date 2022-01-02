@@ -4,3 +4,4 @@
 #4 - Implement eureka client
 #5 - Add validation and actuator dependency
 #6 - Restructure folder
+#7 - Create entities and their repository

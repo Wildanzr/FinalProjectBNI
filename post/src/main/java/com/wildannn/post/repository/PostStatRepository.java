@@ -1,9 +1,9 @@
 package com.wildannn.post.repository;
 
-import com.wildannn.post.entity.Post;
+import com.wildannn.post.entity.PostStat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Long> {
+public interface PostStatRepository extends JpaRepository<PostStat, Long> {
 }

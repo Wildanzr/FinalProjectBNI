@@ -7,7 +7,7 @@ import java.util.List;
 public interface PostService {
     Post addPost(Post post);
     List<Post> findAll();
-    Post findById(Integer id);
-    Post update(Integer id, Post post);
-    void delete(Integer id);
+    Post findById(Long id);
+    Post update(Long id, Post post);
+    void delete(Long id);
 }

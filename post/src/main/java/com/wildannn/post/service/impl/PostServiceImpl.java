@@ -25,24 +25,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post findById(Integer id) {
+    public Post findById(Long id) {
         return postRepository.findById(id).orElseThrow(()-> {
             throw new RuntimeException("Not found!");
         });
     }
 
     @Override
-    public Post update(Integer id, Post post) {
+    public Post update(Long id, Post post) {
         Post updated = this.findById(id);
-        updated.setUpdated_at(post.getUpdated_at());
-        updated.setUser_id(post.getUser_id());
-        updated.setTraining_topic_id(post.getTraining_topic_id());
+        updated.setUpdatedAt(post.getUpdatedAt());
         updated.setContent(post.getContent());
         return postRepository.save(updated);
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         Post deleted = this.findById(id);
         postRepository.delete(deleted);
     }
