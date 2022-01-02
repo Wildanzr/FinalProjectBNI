@@ -32,22 +32,15 @@ public class UserServiceImpl implements UserService{
     private final UserRoleService userRoleService;
     private final UserTrainingTopicService userTrainingTopicService;
 
-    @Override
-    public User create(User user) {
-        //Mengecek apakah sudah ada user dengan alamat email yang akan didaftarkan
-        if (userRepository.findByEmail(user.getEmail()).isPresent())
-            throw new RuntimeException(MessageResponse.EMAIL_REGISTERED);
-         else if(userRepository.findByUsername(user.getUsername()).isPresent())
-             throw new RuntimeException(MessageResponse.USERNAME_REGISTERED);
-
-        User newUser = this.makeUser(user);
-
-        return userRepository.save(newUser);
-    }
-
     //Membuat objek user
     @Override
     public User makeUser(User user) {
+        //Mengecek apakah sudah ada user dengan alamat email yang akan didaftarkan
+        if (userRepository.findByEmail(user.getEmail()).isPresent())
+            throw new RuntimeException(MessageResponse.EMAIL_REGISTERED);
+        else if(userRepository.findByUsername(user.getUsername()).isPresent())
+            throw new RuntimeException(MessageResponse.USERNAME_REGISTERED);
+
         String sequenceID = String.valueOf(idGenerator.generateId(User.SEQUENCE));
 
         return User.builder()

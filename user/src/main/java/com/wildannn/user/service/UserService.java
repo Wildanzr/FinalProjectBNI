@@ -11,7 +11,6 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
 
     //CRUD basic
-    User create(User user);
     List<User> findAll();
     User findById(String id);
     User update(String id, User user);
