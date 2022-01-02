@@ -9,13 +9,13 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class PostWithCommentResponse {
+public class PostWithDetails {
     private Boolean success = true;
     private String message;
     private List<PostWithCommentModel> data;
 
     @Builder
-    public PostWithCommentResponse(String message, List<PostWithCommentModel> data) {
+    public PostWithDetails(String message, List<PostWithCommentModel> data) {
         this.message = message;
         this.data = data;
     }

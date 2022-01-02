@@ -20,6 +20,9 @@ public class ErrorMessageService {
         else if(ex.getMessage().equals(MessageResponse.POST_NOT_FOUND))
             response = errorModifier(response, MessageResponse.POST_NOT_FOUND, 404);
 
+        else if(ex.getMessage().equals(MessageResponse.POST_STAT_NOT_FOUND))
+            response = errorModifier(response, MessageResponse.POST_STAT_NOT_FOUND, 404);
+
         return response;
     }
 

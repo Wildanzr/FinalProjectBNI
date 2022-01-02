@@ -28,4 +28,5 @@ public class MessageResponse {
     //404 Not found
     public final static String COMMENT_NOT_FOUND = "Data komentar tidak ditemukan";
     public final static String POST_NOT_FOUND = "Data post tidak ditemukan";
+    public final static String POST_STAT_NOT_FOUND = "Data post tidak ditemukan";
 }

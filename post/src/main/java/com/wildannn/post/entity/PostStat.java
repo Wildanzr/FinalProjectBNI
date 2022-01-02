@@ -1,9 +1,12 @@
 package com.wildannn.post.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bouncycastle.jcajce.provider.symmetric.IDEA;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,20 +31,19 @@ public class PostStat {
 
     @Column(name = "created_at")
     @JsonProperty("created_at")
+    @CreationTimestamp
     private Date createdAt;
 
     @Column(name = "updated_at")
     @JsonProperty("updated_at")
+    @UpdateTimestamp
     private Date updatedAt;
 
+    @Builder
     public PostStat(Integer likes, Integer comments, Integer shares, Long userLikedId) {
         this.likes = likes;
         this.comments = comments;
         this.shares = shares;
         this.userLikedId = userLikedId;
-
-        Date now = new Date();
-        this.createdAt = now;
-        this.updatedAt = now;
     }
 }

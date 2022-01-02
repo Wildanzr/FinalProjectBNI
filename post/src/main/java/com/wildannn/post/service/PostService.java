@@ -1,6 +1,7 @@
 package com.wildannn.post.service;
 
 import com.wildannn.post.entity.Post;
+import com.wildannn.post.entity.PostStat;
 
 import java.util.List;
 
@@ -14,5 +15,4 @@ public interface PostService {
     void delete(Long id);
 
     //Logic
-
 }
