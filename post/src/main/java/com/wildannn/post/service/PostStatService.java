@@ -13,6 +13,9 @@ public interface PostStatService {
     void likePost(Long postId, Long userId);
     void unlikePost(Long postId, Long userId);
 
+    void comment(Long postId, Long userId);
+    void uncomment(Long postId, Long userId);
+
     StatModel convertToModel(PostStat stat);
     List<StatModel> convertToModels(List<PostStat> stats);
 }

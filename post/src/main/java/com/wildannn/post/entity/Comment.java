@@ -28,12 +28,10 @@ public class Comment {
     @Column(columnDefinition = "TEXT")
     private String comment;
 
-    @NotNull(message = "Post ID tidak boleh kosong")
     @Column(name = "post_id")
     @JsonProperty("post_id")
     private Integer postId;
 
-    @NotNull(message = "User ID tidak boleh kosong")
     @Column(name = "user_id")
     @JsonProperty("user_id")
     private Integer userId;

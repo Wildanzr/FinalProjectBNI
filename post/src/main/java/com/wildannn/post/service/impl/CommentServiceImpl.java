@@ -1,9 +1,12 @@
 package com.wildannn.post.service.impl;
 
 import com.wildannn.post.entity.Comment;
+import com.wildannn.post.entity.Post;
 import com.wildannn.post.handler.MessageResponse;
 import com.wildannn.post.repository.CommentRepository;
 import com.wildannn.post.service.CommentService;
+import com.wildannn.post.service.PostService;
+import com.wildannn.post.service.PostStatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +20,25 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private final CommentRepository commentRepository;
 
+    @Autowired
+    private final PostService postService;
+
+    @Autowired
+    private final PostStatService statService;
+
     @Override
-    public Comment create(Comment comment) {
+    public Comment create(Comment comment, Integer postId, Integer userId) {
+        Long longPostId = postId.longValue();
+        Long longUserId = userId.longValue();
+        Post post = postService.findById(longPostId);
+
+        if(post == null)
+            throw new RuntimeException(MessageResponse.POST_NOT_FOUND);
+
+        comment.setPostId(postId);
+        comment.setUserId(userId);
+        statService.comment(longPostId, longUserId);
+
         return commentRepository.save(comment);
     }
 
@@ -44,8 +64,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void delete(Long id) {
-        Comment deleted = this.findById(id);
+    public void delete(Integer postId, Integer userId, Long id) {
+        Long longPostId = postId.longValue();
+        Long longUserId = userId.longValue();
+        Comment deleted = commentRepository.findByPostIdAndUserIdAndId(postId, userId, id);
+        statService.uncomment(longPostId, longUserId);
 
         commentRepository.delete(deleted);
     }

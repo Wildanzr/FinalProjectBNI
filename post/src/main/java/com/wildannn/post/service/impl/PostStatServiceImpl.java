@@ -94,4 +94,22 @@ public class PostStatServiceImpl implements PostStatService {
 
         return models;
     }
+
+    @Override
+    public void comment(Long postId, Long userId) {
+        PostStat comment = this.findById(postId);
+
+        comment.setComments(comment.getComments()+1);
+    }
+
+    @Override
+    public void uncomment(Long postId, Long userId) {
+        PostStat uncomment = this.findById(postId);
+        log.info(uncomment);
+        uncomment.setComments(uncomment.getComments()-1);
+        log.info("AKHIR");
+        log.info(uncomment);
+        if(uncomment.getComments() < 0)
+            uncomment.setComments(0);
+    }
 }
