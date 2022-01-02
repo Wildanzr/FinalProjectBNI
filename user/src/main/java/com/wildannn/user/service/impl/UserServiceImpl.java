@@ -14,13 +14,15 @@ import com.wildannn.user.service.UserService;
 import com.wildannn.user.service.UserTrainingTopicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Service
+@Service("userService")
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
@@ -30,22 +32,15 @@ public class UserServiceImpl implements UserService{
     private final UserRoleService userRoleService;
     private final UserTrainingTopicService userTrainingTopicService;
 
-    @Override
-    public User create(User user) {
-        //Mengecek apakah sudah ada user dengan alamat email yang akan didaftarkan
-        if (userRepository.findByEmail(user.getEmail()).isPresent())
-            throw new RuntimeException(MessageResponse.EMAIL_REGISTERED);
-         else if(userRepository.findByUsername(user.getUsername()).isPresent())
-             throw new RuntimeException(MessageResponse.USERNAME_REGISTERED);
-
-        User newUser = this.makeUser(user);
-
-        return userRepository.save(newUser);
-    }
-
     //Membuat objek user
     @Override
     public User makeUser(User user) {
+        //Mengecek apakah sudah ada user dengan alamat email yang akan didaftarkan
+        if (userRepository.findByEmail(user.getEmail()).isPresent())
+            throw new RuntimeException(MessageResponse.EMAIL_REGISTERED);
+        else if(userRepository.findByUsername(user.getUsername()).isPresent())
+            throw new RuntimeException(MessageResponse.USERNAME_REGISTERED);
+
         String sequenceID = String.valueOf(idGenerator.generateId(User.SEQUENCE));
 
         return User.builder()
@@ -155,7 +150,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User approveUser(String userId, Boolean isSolo) {
-        User approved = null;
+        User approved;
         if(isSolo)
             approved = this.findById(userId);
         else
@@ -185,5 +180,14 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(id).orElseThrow(()-> {
             throw new RuntimeException(MessageResponse.AN_ID_NOT_FOUND);
         });
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.getDistinctTopByUsername(username);
+        if (user == null)
+            throw new UsernameNotFoundException("Username Not Found");
+
+        return user;
     }
 }

@@ -53,23 +53,6 @@ public class UserController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
-        try {
-            User newUser = userService.create(user);
-            UserModel model = userService.convertToModel(newUser);
-
-            UserResponse response = responseService.
-                    makeUserResponse(MessageResponse.CREATED_USER, model);
-
-            return ResponseEntity.status(201).body(response);
-        } catch (Exception ex) {
-            ErrorResponse error = errorMessageService.errorDefinition(ex);
-
-            return ResponseEntity.status(error.getStatus()).body(error);
-        }
-    }
-
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable("id") String id, @Valid @RequestBody User user) {
         try {
