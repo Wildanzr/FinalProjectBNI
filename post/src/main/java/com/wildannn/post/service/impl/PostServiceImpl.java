@@ -1,6 +1,6 @@
 package com.wildannn.post.service.impl;
 
-import com.wildannn.post.model.Post;
+import com.wildannn.post.entity.Post;
 import com.wildannn.post.repository.PostRepository;
 import com.wildannn.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.wildannn.post.model;
+package com.wildannn.post.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

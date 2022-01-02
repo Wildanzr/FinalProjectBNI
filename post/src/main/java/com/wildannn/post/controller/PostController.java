@@ -1,6 +1,6 @@
 package com.wildannn.post.controller;
 
-import com.wildannn.post.model.Post;
+import com.wildannn.post.entity.Post;
 import com.wildannn.post.payload.InternalErr;
 import com.wildannn.post.service.PostService;
 import lombok.RequiredArgsConstructor;

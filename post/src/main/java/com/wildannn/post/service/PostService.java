@@ -1,6 +1,6 @@
 package com.wildannn.post.service;
 
-import com.wildannn.post.model.Post;
+import com.wildannn.post.entity.Post;
 
 import java.util.List;
 

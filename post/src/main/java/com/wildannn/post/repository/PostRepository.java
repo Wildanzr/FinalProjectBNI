@@ -1,6 +1,6 @@
 package com.wildannn.post.repository;
 
-import com.wildannn.post.model.Post;
+import com.wildannn.post.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
