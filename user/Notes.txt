@@ -28,3 +28,4 @@
 #28 - Adding dependecy security anj jwt
 #29 - Implement spring security
 #30 - Remove some controller in user
+#31 - Fix token response

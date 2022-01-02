@@ -2,6 +2,7 @@ package com.wildannn.user.service.impl;
 
 import com.wildannn.user.entity.User;
 import com.wildannn.user.model.LoginModel;
+import com.wildannn.user.model.TokenModel;
 import com.wildannn.user.payload.TokenResponse;
 import com.wildannn.user.repository.UserRepository;
 import com.wildannn.user.security.JwtTokenProvider;
@@ -37,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public TokenResponse generateToken(LoginModel req) {
+    public TokenModel generateToken(LoginModel req) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -48,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
                     .setAuthentication(authentication);
             String jwt = tokenProvider.generateToken(authentication);
 
-            return TokenResponse.builder()
+            return TokenModel.builder()
                     .token(jwt)
                     .build();
 

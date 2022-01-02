@@ -74,4 +74,11 @@ public class ResponseService {
                 .data(modelList)
                 .build();
     }
+
+    public TokenResponse makeTokenResponse(String message, String token) {
+        return TokenResponse.builder()
+                .message(message)
+                .token(token)
+                .build();
+    }
 }

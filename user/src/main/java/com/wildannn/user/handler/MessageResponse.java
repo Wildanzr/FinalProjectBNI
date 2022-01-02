@@ -28,6 +28,7 @@ public class MessageResponse {
     public final static String DELETED_TOPIC = "Success deleted training topic";
     public final static String DELETED_ROLE = "Success delete role";
 
+    public final static String LOGIN_SUCCESS = "Success login";
 
     //201 Created
     public final static String CREATED_USER = "Success created user";

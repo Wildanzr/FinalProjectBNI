@@ -3,6 +3,7 @@ package com.wildannn.user.controller;
 import com.wildannn.user.entity.User;
 import com.wildannn.user.handler.MessageResponse;
 import com.wildannn.user.model.LoginModel;
+import com.wildannn.user.model.TokenModel;
 import com.wildannn.user.model.UserModel;
 import com.wildannn.user.payload.ErrorResponse;
 import com.wildannn.user.payload.ResponseService;
@@ -49,9 +50,11 @@ public class AuthController {
     @PostMapping
     public ResponseEntity<?> generateToken(@Valid @RequestBody LoginModel login) {
         try {
-            TokenResponse token = authService.generateToken(login);
+            TokenModel token = authService.generateToken(login);
+            TokenResponse response = responseService
+                    .makeTokenResponse(MessageResponse.LOGIN_SUCCESS, token.getToken());
 
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(response);
         } catch (Exception ex) {
             ErrorResponse error = errorMessageService.errorDefinition(ex);
 
