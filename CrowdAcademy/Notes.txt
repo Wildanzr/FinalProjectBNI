@@ -13,3 +13,6 @@
 #13 - Merge feature approval
 #14 - Implement spring security
 #15 - Branch restructure
+#16 - Merge user-service implementation
+#17 - Merge 1/4 post service
+#18 - Branch restructure
