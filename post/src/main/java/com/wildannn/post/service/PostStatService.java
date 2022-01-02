@@ -4,7 +4,7 @@ import com.wildannn.post.entity.Post;
 import com.wildannn.post.entity.PostStat;
 
 public interface PostStatService {
-    PostStat make(Post post);
+    PostStat make();
     PostStat findById(Long id);
     void delete(Long id);
 

@@ -1,17 +1,18 @@
 package com.wildannn.post.service.impl;
 
-import com.wildannn.post.entity.Post;
 import com.wildannn.post.entity.PostStat;
 import com.wildannn.post.handler.MessageResponse;
 import com.wildannn.post.repository.PostStatRepository;
 import com.wildannn.post.service.PostStatService;
 import com.wildannn.post.service.UserLikeService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class PostStatServiceImpl implements PostStatService {
 
     @Autowired
@@ -19,12 +20,12 @@ public class PostStatServiceImpl implements PostStatService {
     private final UserLikeService likeService;
 
     @Override
-    public PostStat make(Post post) {
+    public PostStat make() {
+        log.info("EXECUTE");
         PostStat stat =  PostStat.builder()
                 .comments(0)
                 .likes(0)
                 .shares(0)
-                .userLikedId(post.getId())
                 .build();
 
         return statRepository.save(stat);

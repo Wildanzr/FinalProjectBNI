@@ -1,21 +1,20 @@
 package com.wildannn.post.service.impl;
 
 import com.wildannn.post.entity.Post;
-import com.wildannn.post.entity.PostStat;
 import com.wildannn.post.handler.MessageResponse;
 import com.wildannn.post.repository.PostRepository;
-import com.wildannn.post.repository.PostStatRepository;
 import com.wildannn.post.service.PostService;
 import com.wildannn.post.service.PostStatService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.POST;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class PostServiceImpl implements PostService {
 
     @Autowired
@@ -24,10 +23,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post addPost(Post post) {
-        Post post1 = postRepository.save(post);
-        statService.make(post1);
-
-        return post1;
+        log.info("CALLING");
+//        statService.make();
+        return postRepository.save(post);
     }
 
     @Override

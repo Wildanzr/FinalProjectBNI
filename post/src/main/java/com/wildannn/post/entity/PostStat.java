@@ -40,10 +40,10 @@ public class PostStat {
     private Date updatedAt;
 
     @Builder
-    public PostStat(Integer likes, Integer comments, Integer shares, Long userLikedId) {
+    public PostStat(Integer likes, Integer comments, Integer shares) {
         this.likes = likes;
         this.comments = comments;
         this.shares = shares;
-        this.userLikedId = userLikedId;
+        this.userLikedId = postId;
     }
 }

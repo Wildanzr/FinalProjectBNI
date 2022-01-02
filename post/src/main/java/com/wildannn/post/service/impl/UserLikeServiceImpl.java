@@ -17,13 +17,13 @@ public class UserLikeServiceImpl implements UserLikeService {
     private final UserLikeRepository likeRepository;
 
     @Override
-    public UserLike like(Long postStatId, Long userId) {
+    public void like(Long postStatId, Long userId) {
         UserLike like = UserLike.builder()
                 .postId(postStatId)
                 .userId(userId)
                 .build();
 
-        return likeRepository.save(like);
+        likeRepository.save(like);
     }
 
     @Override
