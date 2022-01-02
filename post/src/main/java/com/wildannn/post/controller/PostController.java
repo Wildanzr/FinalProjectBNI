@@ -1,8 +1,12 @@
 package com.wildannn.post.controller;
 
 import com.wildannn.post.entity.Post;
-import com.wildannn.post.payload.InternalErr;
+import com.wildannn.post.handler.MessageResponse;
+import com.wildannn.post.payload.ErrorResponse;
+import com.wildannn.post.payload.PostResponse;
+import com.wildannn.post.payload.ResponseService;
 import com.wildannn.post.service.PostService;
+import com.wildannn.post.service.impl.ErrorMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +19,16 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final ErrorMessageService errorMessageService;
+    private final ResponseService responseService;
 
     @PostMapping
     public ResponseEntity<?> createPost(@RequestBody Post post) {
-        Post created = postService.addPost(post);
-        return ResponseEntity.ok(created);
+        Post post1 = postService.addPost(post);
+        PostResponse response = responseService
+                .makePostResponse(MessageResponse.CREATE_POST, post1);
+
+        return ResponseEntity.status(201).body(response);
     }
 
     @GetMapping
@@ -34,8 +43,9 @@ public class PostController {
             Post post = postService.findById(id);
             return ResponseEntity.ok(post);
         } catch(Exception ex) {
-            InternalErr error = new InternalErr(ex.getMessage());
-            return ResponseEntity.internalServerError().body(error);
+            ErrorResponse error = errorMessageService.errorDefinition(ex);
+
+            return ResponseEntity.status(error.getStatus()).body(error);
         }
     }
 
@@ -44,9 +54,10 @@ public class PostController {
         try {
             Post updated = postService.update(id, post);
             return ResponseEntity.ok(updated);
-        } catch (Exception ex) {
-            InternalErr error = new InternalErr(ex.getMessage());
-            return ResponseEntity.internalServerError().body(error);
+        } catch(Exception ex) {
+            ErrorResponse error = errorMessageService.errorDefinition(ex);
+
+            return ResponseEntity.status(error.getStatus()).body(error);
         }
     }
 
@@ -55,9 +66,10 @@ public class PostController {
         try {
             postService.delete(id);
             return ResponseEntity.ok().build();
-        } catch (Exception ex) {
-            InternalErr error = new InternalErr(ex.getMessage());
-            return ResponseEntity.internalServerError().body(error);
+        } catch(Exception ex) {
+            ErrorResponse error = errorMessageService.errorDefinition(ex);
+
+            return ResponseEntity.status(error.getStatus()).body(error);
         }
     }
 }

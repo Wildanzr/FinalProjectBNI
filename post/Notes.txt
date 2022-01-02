@@ -5,3 +5,4 @@
 #5 - Add validation and actuator dependency
 #6 - Restructure folder
 #7 - Create entities and their repository
+#8 - Apply standard json for creating post
