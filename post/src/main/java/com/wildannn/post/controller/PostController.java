@@ -1,7 +1,6 @@
 package com.wildannn.post.controller;
 
 import com.wildannn.post.entity.Post;
-import com.wildannn.post.entity.PostStat;
 import com.wildannn.post.handler.MessageResponse;
 import com.wildannn.post.model.PostModel;
 import com.wildannn.post.payload.*;
@@ -36,6 +35,36 @@ public class PostController {
                 .makePostWithDetailResponse(MessageResponse.CREATE_POST, model);
 
         return ResponseEntity.status(201).body(response);
+    }
+
+    @PostMapping("/{id}/likedby/{userId}")
+    public ResponseEntity<?> likePost(@PathVariable("id") Long id, @PathVariable("userId") Long userId) {
+        try {
+            postStatService.likePost(id, userId);
+            LikeResponse response = responseService
+                    .makeLikeOrUnlikeResponse(MessageResponse.SUCCESS_LIKE);
+
+            return ResponseEntity.ok().body(response);
+        } catch(Exception ex) {
+            ErrorResponse error = errorMessageService.errorDefinition(ex);
+
+            return ResponseEntity.status(error.getStatus()).body(error);
+        }
+    }
+
+    @DeleteMapping("/{id}/unlikedby/{userId}")
+    public ResponseEntity<?> unlikePost(@PathVariable("id") Long id, @PathVariable("userId") Long userId) {
+        try {
+            postStatService.unlikePost(id, userId);
+            LikeResponse response = responseService
+                    .makeLikeOrUnlikeResponse(MessageResponse.SUCCESS_UNLIKE);
+
+            return ResponseEntity.ok().body(response);
+        } catch(Exception ex) {
+            ErrorResponse error = errorMessageService.errorDefinition(ex);
+
+            return ResponseEntity.status(error.getStatus()).body(error);
+        }
     }
 
     @GetMapping

@@ -74,4 +74,10 @@ public class ResponseService {
                 .data(models)
                 .build();
     }
+
+    public LikeResponse makeLikeOrUnlikeResponse(String message) {
+        return LikeResponse.builder()
+                .message(message)
+                .build();
+    }
 }

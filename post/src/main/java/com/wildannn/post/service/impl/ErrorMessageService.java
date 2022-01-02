@@ -23,6 +23,9 @@ public class ErrorMessageService {
         else if(ex.getMessage().equals(MessageResponse.POST_STAT_NOT_FOUND))
             response = errorModifier(response, MessageResponse.POST_STAT_NOT_FOUND, 404);
 
+        else if(ex.getMessage().equals(MessageResponse.HAVE_LIKED))
+            response = errorModifier(response, MessageResponse.HAVE_LIKED, 400);
+
         return response;
     }
 

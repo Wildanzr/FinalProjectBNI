@@ -8,11 +8,12 @@ public class MessageResponse {
     //200 Ok
     public final static String GET_ALL_POST = "Success get all post";
     public final static String GET_ALL_COMMENT = "Success get all comment";
+    public final static String SUCCESS_LIKE = "Success like a post";
+    public final static String SUCCESS_UNLIKE = "Success unlike a post";
 
 
     public final static String GET_POST = "Success get post";
     public final static String GET_COMMENT = "Success get comment";
-    public final static String GET_POST_STAT = "Success get stat";
 
     public final static String UPDATE_POST = "Success update post";
     public final static String UPDATE_COMMENT = "Success update comment";
@@ -25,6 +26,7 @@ public class MessageResponse {
     public final static String CREATE_COMMENT = "Success create comment";
 
     //400 Bad request
+    public final static String HAVE_LIKED = "Sebelumnya telah like post ini";
 
     //404 Not found
     public final static String COMMENT_NOT_FOUND = "Data komentar tidak ditemukan";
