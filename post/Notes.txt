@@ -7,3 +7,4 @@
 #7 - Create entities and their repository
 #8 - Apply standard json for creating post
 #9 - Apply validation for post
+#10 - Basic post controller

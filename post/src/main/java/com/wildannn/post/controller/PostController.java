@@ -34,15 +34,21 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<?> listPost() {
-        List<Post> postList = postService.findAll();
-        return ResponseEntity.ok(postList);
+        List<Post> posts = postService.findAll();
+        PostResponse response = responseService
+                .makePostsResponse(MessageResponse.GET_ALL_POST, posts);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findPost(@PathVariable("id") Long id) {
         try {
             Post post = postService.findById(id);
-            return ResponseEntity.ok(post);
+            PostResponse response = responseService
+                    .makePostResponse(MessageResponse.GET_POST, post);
+
+            return ResponseEntity.ok(response);
         } catch(Exception ex) {
             ErrorResponse error = errorMessageService.errorDefinition(ex);
 
@@ -54,7 +60,10 @@ public class PostController {
     public ResponseEntity<?> updatePost(@PathVariable("id") Long id, @RequestBody Post post) {
         try {
             Post updated = postService.update(id, post);
-            return ResponseEntity.ok(updated);
+            PostResponse response = responseService
+                    .makePostResponse(MessageResponse.UPDATE_POST, updated);
+
+            return ResponseEntity.ok(response);
         } catch(Exception ex) {
             ErrorResponse error = errorMessageService.errorDefinition(ex);
 
@@ -66,7 +75,10 @@ public class PostController {
     public ResponseEntity<?> deletePost(@PathVariable("id") Long id) {
         try {
             postService.delete(id);
-            return ResponseEntity.ok().build();
+            PostResponse response = responseService
+                    .makePostResponse(MessageResponse.DELETE_POST, null);
+
+            return ResponseEntity.ok().body(response);
         } catch(Exception ex) {
             ErrorResponse error = errorMessageService.errorDefinition(ex);
 
