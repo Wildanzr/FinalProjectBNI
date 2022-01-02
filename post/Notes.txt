@@ -11,3 +11,4 @@
 #11 - Basic comment controller
 #12 - Implement service like, unlike, delete post
 #13 - Controller make post with post_stats
+#14 - Post with details

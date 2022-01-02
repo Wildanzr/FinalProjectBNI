@@ -3,9 +3,8 @@ package com.wildannn.post.controller;
 import com.wildannn.post.entity.Post;
 import com.wildannn.post.entity.PostStat;
 import com.wildannn.post.handler.MessageResponse;
-import com.wildannn.post.payload.ErrorResponse;
-import com.wildannn.post.payload.PostResponse;
-import com.wildannn.post.payload.ResponseService;
+import com.wildannn.post.model.PostModel;
+import com.wildannn.post.payload.*;
 import com.wildannn.post.service.PostService;
 import com.wildannn.post.service.PostStatService;
 import com.wildannn.post.service.impl.ErrorMessageService;
@@ -32,8 +31,9 @@ public class PostController {
     public ResponseEntity<?> createPost(@Valid @RequestBody Post post) {
         Post post1 = postService.addPost(post);
         postStatService.make();
-        PostResponse response = responseService
-                .makePostResponse(MessageResponse.CREATE_POST, post1);
+        PostModel model = postService.convertToModel(post1);
+        PostWithDetailsResponse response = responseService
+                .makePostWithDetailResponse(MessageResponse.CREATE_POST, model);
 
         return ResponseEntity.status(201).body(response);
     }
@@ -41,8 +41,9 @@ public class PostController {
     @GetMapping
     public ResponseEntity<?> listPost() {
         List<Post> posts = postService.findAll();
-        PostResponse response = responseService
-                .makePostsResponse(MessageResponse.GET_ALL_POST, posts);
+        List<PostModel> models = postService.convertToModels(posts);
+        PostWithDetailsResponse response = responseService
+                .makePostWithDetailsResponse(MessageResponse.GET_ALL_POST, models);
 
         return ResponseEntity.ok(response);
     }
@@ -51,10 +52,11 @@ public class PostController {
     public ResponseEntity<?> findPost(@PathVariable("id") Long id) {
         try {
             Post post = postService.findById(id);
-            PostResponse response = responseService
-                    .makePostResponse(MessageResponse.GET_POST, post);
+            PostModel model = postService.convertToModel(post);
+            PostWithDetailsResponse response = responseService
+                    .makePostWithDetailResponse(MessageResponse.GET_POST, model);
 
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok().body(response);
         } catch(Exception ex) {
             ErrorResponse error = errorMessageService.errorDefinition(ex);
 
@@ -66,10 +68,11 @@ public class PostController {
     public ResponseEntity<?> updatePost(@PathVariable("id") Long id, @Valid @RequestBody Post post) {
         try {
             Post updated = postService.update(id, post);
-            PostResponse response = responseService
-                    .makePostResponse(MessageResponse.UPDATE_POST, updated);
+            PostModel model = postService.convertToModel(updated);
+            PostWithDetailsResponse response = responseService
+                    .makePostWithDetailResponse(MessageResponse.UPDATE_POST, model);
 
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok().body(response);
         } catch(Exception ex) {
             ErrorResponse error = errorMessageService.errorDefinition(ex);
 
@@ -81,8 +84,8 @@ public class PostController {
     public ResponseEntity<?> deletePost(@PathVariable("id") Long id) {
         try {
             postService.delete(id);
-            PostResponse response = responseService
-                    .makePostResponse(MessageResponse.DELETE_POST, null);
+            PostWithDetailsResponse response = responseService
+                    .makePostWithDetailResponse(MessageResponse.DELETE_POST, null);
 
             return ResponseEntity.ok().body(response);
         } catch(Exception ex) {

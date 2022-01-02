@@ -12,6 +12,7 @@ public class MessageResponse {
 
     public final static String GET_POST = "Success get post";
     public final static String GET_COMMENT = "Success get comment";
+    public final static String GET_POST_STAT = "Success get stat";
 
     public final static String UPDATE_POST = "Success update post";
     public final static String UPDATE_COMMENT = "Success update comment";

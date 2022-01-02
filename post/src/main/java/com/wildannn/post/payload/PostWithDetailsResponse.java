@@ -1,6 +1,6 @@
 package com.wildannn.post.payload;
 
-import com.wildannn.post.model.PostWithCommentModel;
+import com.wildannn.post.model.PostModel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,13 +9,13 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class PostWithDetails {
+public class PostWithDetailsResponse {
     private Boolean success = true;
     private String message;
-    private List<PostWithCommentModel> data;
+    private List<PostModel> data;
 
     @Builder
-    public PostWithDetails(String message, List<PostWithCommentModel> data) {
+    public PostWithDetailsResponse(String message, List<PostModel> data) {
         this.message = message;
         this.data = data;
     }

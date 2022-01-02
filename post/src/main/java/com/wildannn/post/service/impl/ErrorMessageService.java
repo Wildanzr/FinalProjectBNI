@@ -9,7 +9,7 @@ public class ErrorMessageService {
 
     public ErrorResponse errorDefinition(Exception ex) {
         ErrorResponse response = ErrorResponse.builder()
-                .message("Internal Server Error")
+                .message(ex.getMessage())
                 .status(500)
                 .build();
 

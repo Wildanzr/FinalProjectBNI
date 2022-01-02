@@ -1,7 +1,10 @@
 package com.wildannn.post.service.impl;
 
 import com.wildannn.post.entity.Post;
+import com.wildannn.post.entity.PostStat;
 import com.wildannn.post.handler.MessageResponse;
+import com.wildannn.post.model.PostModel;
+import com.wildannn.post.model.StatModel;
 import com.wildannn.post.repository.PostRepository;
 import com.wildannn.post.service.PostService;
 import com.wildannn.post.service.PostStatService;
@@ -10,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,12 +23,12 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
     private PostStatService statService;
 
     @Override
     public Post addPost(Post post) {
-        log.info("CALLING");
-//        statService.make();
         return postRepository.save(post);
     }
 
@@ -52,5 +56,34 @@ public class PostServiceImpl implements PostService {
     public void delete(Long id) {
         Post deleted = this.findById(id);
         postRepository.delete(deleted);
+    }
+
+    @Override
+    public PostModel convertToModel(Post post) {
+        List<StatModel> models = new ArrayList<>();
+        PostStat stat = statService.findById(post.getId());
+        StatModel model = statService.convertToModel(stat);
+        models.add(model);
+
+        return PostModel.builder()
+                .id(post.getId())
+                .content(post.getContent())
+                .userId(post.getUserId())
+                .trainingTopicId(post.getTrainingTopicId())
+                .stats(models)
+                .createdAt(post.getCreatedAt())
+                .updatedAt(post.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public List<PostModel> convertToModels(List<Post> posts) {
+        List<PostModel> models = new ArrayList<>();
+
+        for(Post a : posts) {
+            models.add(this.convertToModel(a));
+        }
+
+        return models;
     }
 }
