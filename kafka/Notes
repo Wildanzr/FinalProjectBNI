@@ -1,0 +1,3 @@
+#1 - Implement spring kafka
+#2 - Add mongo, eureka client and setting app properties
+#3 - Implement kafka log service
