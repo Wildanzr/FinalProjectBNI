@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bouncycastle.jcajce.provider.symmetric.IDEA;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -25,10 +24,6 @@ public class PostStat {
     private Integer comments;
     private Integer shares;
 
-    @Column(name = "user_likes_id")
-    @JsonProperty("user_likes_id")
-    private Long userLikedId;
-
     @Column(name = "created_at")
     @JsonProperty("created_at")
     @CreationTimestamp
@@ -44,6 +39,5 @@ public class PostStat {
         this.likes = likes;
         this.comments = comments;
         this.shares = shares;
-        this.userLikedId = postId;
     }
 }

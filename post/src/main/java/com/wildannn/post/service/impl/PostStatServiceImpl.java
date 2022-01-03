@@ -2,6 +2,7 @@ package com.wildannn.post.service.impl;
 
 import com.wildannn.post.entity.PostStat;
 import com.wildannn.post.handler.MessageResponse;
+import com.wildannn.post.model.StatModel;
 import com.wildannn.post.repository.PostStatRepository;
 import com.wildannn.post.service.PostStatService;
 import com.wildannn.post.service.UserLikeService;
@@ -9,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -67,5 +71,45 @@ public class PostStatServiceImpl implements PostStatService {
             likeService.unlike(postId, userId);
         else
             unlike.setLikes(0);
+    }
+
+    @Override
+    public StatModel convertToModel(PostStat stat) {
+        return StatModel.builder()
+                .likes(stat.getLikes())
+                .shares(stat.getShares())
+                .comments(stat.getComments())
+                .createdAt(stat.getCreatedAt())
+                .updatedAt(stat.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public List<StatModel> convertToModels(List<PostStat> stats) {
+        List<StatModel> models = new ArrayList<>();
+
+        for(PostStat a : stats) {
+            models.add(this.convertToModel(a));
+        }
+
+        return models;
+    }
+
+    @Override
+    public void comment(Long postId, Long userId) {
+        PostStat comment = this.findById(postId);
+
+        comment.setComments(comment.getComments()+1);
+    }
+
+    @Override
+    public void uncomment(Long postId, Long userId) {
+        PostStat uncomment = this.findById(postId);
+        log.info(uncomment);
+        uncomment.setComments(uncomment.getComments()-1);
+        log.info("AKHIR");
+        log.info(uncomment);
+        if(uncomment.getComments() < 0)
+            uncomment.setComments(0);
     }
 }

@@ -1,6 +1,7 @@
 package com.wildannn.post.service.impl;
 
 import com.wildannn.post.entity.UserLike;
+import com.wildannn.post.handler.MessageResponse;
 import com.wildannn.post.repository.UserLikeRepository;
 import com.wildannn.post.service.UserLikeService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,9 @@ public class UserLikeServiceImpl implements UserLikeService {
 
     @Override
     public void like(Long postStatId, Long userId) {
+        if(likeRepository.findByPostIdAndUserId(postStatId, userId) != null)
+            throw new RuntimeException(MessageResponse.HAVE_LIKED);
+
         UserLike like = UserLike.builder()
                 .postId(postStatId)
                 .userId(userId)

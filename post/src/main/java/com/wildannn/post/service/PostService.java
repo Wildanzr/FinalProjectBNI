@@ -1,7 +1,8 @@
 package com.wildannn.post.service;
 
 import com.wildannn.post.entity.Post;
-import com.wildannn.post.entity.PostStat;
+import com.wildannn.post.model.PostModel;
+import com.wildannn.post.model.StatModel;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface PostService {
     void delete(Long id);
 
     //Logic
+    PostModel convertToModel(Post post);
+    List<PostModel> convertToModels(List<Post> posts);
 }

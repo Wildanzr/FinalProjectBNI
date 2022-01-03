@@ -7,12 +7,12 @@ import java.util.List;
 
 @Data
 @Builder
-public class PostWithCommentModel {
+public class PostModel {
     private Long id;
     private String content;
     private Long userId;
     private Integer trainingTopicId;
+    private List<StatModel> stats;
     private Date createdAt;
     private Date updatedAt;
-    private List<CommentModel> comments;
 }

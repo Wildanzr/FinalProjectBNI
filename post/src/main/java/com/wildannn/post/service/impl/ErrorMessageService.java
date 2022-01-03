@@ -9,8 +9,8 @@ public class ErrorMessageService {
 
     public ErrorResponse errorDefinition(Exception ex) {
         ErrorResponse response = ErrorResponse.builder()
-                .message("Internal Server Error")
-                .status(500)
+                .message(ex.getMessage())
+                .status(400)
                 .build();
 
         //Todo add handler dictionary
@@ -22,6 +22,12 @@ public class ErrorMessageService {
 
         else if(ex.getMessage().equals(MessageResponse.POST_STAT_NOT_FOUND))
             response = errorModifier(response, MessageResponse.POST_STAT_NOT_FOUND, 404);
+
+        else if(ex.getMessage().equals(MessageResponse.HAVE_LIKED))
+            response = errorModifier(response, MessageResponse.HAVE_LIKED, 400);
+
+        else if(ex.getMessage().equals(MessageResponse.POST_NOT_FOUND))
+            response = errorModifier(response, MessageResponse.POST_NOT_FOUND, 404);
 
         return response;
     }
