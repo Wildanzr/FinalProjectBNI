@@ -16,3 +16,5 @@
 #16 - Merge user-service implementation
 #17 - Merge 1/4 post service
 #18 - Branch restructure
+#19 - Merge post-service
+#20 - Kafka implementation
