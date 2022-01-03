@@ -19,3 +19,5 @@
 #19 - Merge post-service
 #20 - Kafka implementation
 #21 - Branch restructure
+#22 - Merge kafka-service
+#23 - Creating gateway-api-service
