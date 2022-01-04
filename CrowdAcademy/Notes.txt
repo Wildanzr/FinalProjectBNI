@@ -22,3 +22,5 @@
 #22 - Merge kafka-service
 #23 - Creating gateway-api-service
 #24 - Branch restructure
+#25 - Merge api-gateway service
+#26 - Separate kafka service
