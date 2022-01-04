@@ -12,6 +12,7 @@ import com.wildannn.user.payload.UserResponse;
 import com.wildannn.user.service.AuthService;
 import com.wildannn.user.service.UserService;
 import com.wildannn.user.service.impl.ErrorMessageService;
+import com.wildannn.user.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +27,8 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
     private final UserService userService;
+    private final AuthService authService;
     private final ResponseService responseService;
     private final ErrorMessageService errorMessageService;
 
@@ -47,7 +48,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/login")
     public ResponseEntity<?> generateToken(@Valid @RequestBody LoginModel login) {
         try {
             TokenModel token = authService.generateToken(login);

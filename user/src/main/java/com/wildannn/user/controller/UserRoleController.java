@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/roles")
+@RequestMapping("/users/roles")
 public class UserRoleController {
 
     private final UserRoleService userRoleService;

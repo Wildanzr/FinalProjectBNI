@@ -1,0 +1,36 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: gateway-service
+  sleuth:
+    sampler:
+      probability: 1.0
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: user-service
+#          uri: http://localhost:8100/
+#          predicates:
+#            - Path=/users/**
+#        - id: auth-service
+#          uri: http://localhost:8100/
+#          predicates:
+#            - Path=/auth/**
+#        - id: post-service
+#          uri: http://localhost:8300/
+#          predicates:
+#            - Path=/posts/**
+  main:
+    web-application-type: reactive
+
+eureka:
+  client:
+    serviceURL:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}:${random.uuid}
+
+jwt:
+  secret: halohalohalo

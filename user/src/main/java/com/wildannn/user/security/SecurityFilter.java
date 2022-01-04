@@ -1,5 +1,6 @@
 package com.wildannn.user.security;
 
+import com.wildannn.user.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +28,14 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
     private final UserDetailsService userDetailsService;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtUtil jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = getJWTFromRequest(request);
-            if (token != null && !token.isBlank() && jwtTokenProvider.validateToke(token)) {
-                String username = jwtTokenProvider.getUsername(token);
+            if (token != null && !token.isBlank() && jwtUtil.validate(token)) {
+                String username = jwtUtil.getUsername(token);
                 log.info("username : {}", username);
                 UserDetails user = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
