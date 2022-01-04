@@ -46,7 +46,7 @@ public class User implements UserDetails {
     @Size(min=1, max=100, message = "Lastname harus terdiri dari 1 hingga 100 karakter")
     @JsonProperty("last_name")
     private String lastName;
-    
+
     @NotEmpty(message = "Gender tidak boleh kosong")
     @Size(max=1, message = "Gender harus terdiri dari 1 karakter L/P")
     private String gender;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/academy")
+@RequestMapping("/users/academy")
 @RequiredArgsConstructor
 @Log4j2
 public class UserTrainingTopicController {
