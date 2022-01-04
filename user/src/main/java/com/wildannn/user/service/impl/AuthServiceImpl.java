@@ -17,6 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -27,11 +29,13 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final KafkaProducer producer;
 
     @Override
     public User register(User req) {
         User user = userService.makeUser(req);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        producer.produce(user.getUsername() + " mendaftar ke sistem");
 
         return userRepository.save(user);
     }
@@ -47,6 +51,7 @@ public class AuthServiceImpl implements AuthService {
             SecurityContextHolder.getContext()
                     .setAuthentication(authentication);
             String jwt = jwtUtil.generateToken(req.getUsername());
+            producer.produce(req.getUsername() + " login ke sistem");
 
             return TokenModel.builder()
                     .token(jwt)

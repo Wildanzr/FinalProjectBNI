@@ -25,3 +25,4 @@
 #25 - Merge api-gateway service
 #26 - Separate kafka service
 #27 - Branch restructure
+#28 - Appy kafka log for register, login, and delete in user-service

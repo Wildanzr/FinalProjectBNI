@@ -21,6 +21,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Autowired
     private UserRoleRepository userRoleRepository;
     private final IdGenerator idGenerator;
+    private final KafkaProducer producer;
 
     @Override
     public UserRole create(UserRole userRole) {
@@ -61,7 +62,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public void delete(String id) {
         UserRole deleted = this.findById(id);
-
+        producer.produce("Role " +deleted.getName()+ " telah dihapus");
         userRoleRepository.delete(deleted);
     }
 

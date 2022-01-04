@@ -1,10 +1,7 @@
-package com.wildannn.kafka.service;
+package com.wildannn.user.service.impl;
 
-import com.wildannn.kafka.entity.Log;
-import com.wildannn.kafka.repository.LogRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
@@ -14,16 +11,12 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Service
 @Log4j2
 public class KafkaProducer {
+
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    @Autowired
-    private LogRepository logRepository;
-
-    @Value("${app.topic}")
-    private String topic;
-
     public void produce(String message) {
+        String topic = "crowdacademy";
         ListenableFuture<SendResult<String, String>> future =
                 kafkaTemplate.send(topic, message);
 
@@ -34,8 +27,6 @@ public class KafkaProducer {
                 log.info("Sent message=[" + message +
                         "] with offset=[" + result.getRecordMetadata().offset() + "]");
 
-                Log log = makeLog(message);
-                logRepository.save(log);
             }
             @Override
             public void onFailure(Throwable ex) {
@@ -43,12 +34,6 @@ public class KafkaProducer {
                         + message + "] due to : " + ex.getMessage());
             }
         });
-    }
-
-    public Log makeLog(String message) {
-        return Log.builder()
-                .logData(message)
-                .build();
     }
 }
 
