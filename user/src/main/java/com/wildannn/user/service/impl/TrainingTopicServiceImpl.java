@@ -21,6 +21,7 @@ public class TrainingTopicServiceImpl implements TrainingTopicService {
     @Autowired
     private final TrainingTopicRepository topicRepository;
     private final IdGenerator idGenerator;
+    private final KafkaProducer producer;
     
     @Override
     public TrainingTopic create(TrainingTopic topic) {
@@ -66,6 +67,7 @@ public class TrainingTopicServiceImpl implements TrainingTopicService {
     @Override
     public void delete(String id) {
         TrainingTopic deleted = this.findById(id);
+        producer.produce("Topic " +deleted.getName()+ " telah dihapus");
 
         topicRepository.delete(deleted);
     }

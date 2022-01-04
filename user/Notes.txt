@@ -30,3 +30,4 @@
 #30 - Remove some controller in user
 #31 - Fix token response
 #32 - Implement api gateway
+#33 - Add kafka

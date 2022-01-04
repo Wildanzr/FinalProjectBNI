@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService{
     private final IdGenerator idGenerator;
     private final UserRoleService userRoleService;
     private final UserTrainingTopicService userTrainingTopicService;
+    private final KafkaProducer producer;
 
     //Membuat objek user
     @Override
@@ -95,6 +96,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public void delete(String id) {
         User deletedUser = this.findById(id);
+        String name = deletedUser.getFirstName() + " " + deletedUser.getLastName();
+        producer.produce("User " +name+ " telah dihapus");
         userRepository.delete(deletedUser);
     }
 
