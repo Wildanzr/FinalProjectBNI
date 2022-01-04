@@ -9,8 +9,8 @@ public class ErrorMessageService {
 
     public ErrorResponse errorDefinition(Exception ex) {
         ErrorResponse response = ErrorResponse.builder()
-                .message("Internal Server Error")
-                .status(500)
+                .message("Bad Request")
+                .status(400)
                 .build();
 
         if(ex.getMessage().equalsIgnoreCase(MessageResponse.NOT_FOUND))

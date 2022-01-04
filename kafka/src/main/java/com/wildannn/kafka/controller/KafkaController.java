@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/kafka")
+@RequestMapping("/logs")
 @RequiredArgsConstructor
 public class KafkaController {
     @Autowired

@@ -1,5 +1,6 @@
 package com.wildannn.user.handler;
 
+import com.wildannn.user.payload.ValidatorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,11 @@ public class ValidatorHandler extends ResponseEntityExceptionHandler {
             errors.put(fieldName, message);
         });
         errors.put("status", "400");
+        ValidatorResponse response = ValidatorResponse.builder()
+                .message(MessageResponse.ERROR_TYPO)
+                .messages(errors)
+                .build();
 
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

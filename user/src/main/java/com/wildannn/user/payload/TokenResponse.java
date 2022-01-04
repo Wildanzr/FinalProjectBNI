@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 public class TokenResponse {
     private Boolean status = true;
     private String message;
-    private String token;
+    private String data;
 
     @Builder
-    public TokenResponse(String message, String token) {
+    public TokenResponse(String message, String data) {
         this.message = message;
-        this.token = token;
+        this.data = data;
     }
 }

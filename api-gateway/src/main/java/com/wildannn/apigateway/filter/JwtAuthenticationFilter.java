@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter implements GatewayFilter {
             } catch (JwtTokenMalformedException | JwtTokenMissingException e) {
 
                 ServerHttpResponse response = exchange.getResponse();
-                response.setStatusCode(HttpStatus.BAD_REQUEST);
+                response.setStatusCode(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
 
                 return response.setComplete();
             }

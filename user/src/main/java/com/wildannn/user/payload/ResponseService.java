@@ -78,7 +78,7 @@ public class ResponseService {
     public TokenResponse makeTokenResponse(String message, String token) {
         return TokenResponse.builder()
                 .message(message)
-                .token(token)
+                .data(token)
                 .build();
     }
 }

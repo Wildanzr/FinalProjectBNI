@@ -49,4 +49,5 @@ public class MessageResponse {
     public final static String HAVE_ENROLLED = "Tidak bisa enroll pada training topic yang telah diambil";
     public final static String EMPTY_IDS = "Data user id tidak boleh kosong";
     public final static String WRONG_PASSWORD = "Password tidak sesuai";
+    public final static String ERROR_TYPO = "Terdapat kesalahan pada masukkan";
 }

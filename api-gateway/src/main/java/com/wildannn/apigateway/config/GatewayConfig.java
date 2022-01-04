@@ -19,6 +19,7 @@ public class GatewayConfig {
                 .route("auth", r -> r.path("/auth/**").filters(f -> f.filter(filter)).uri("http://localhost:8100"))
                 .route("user", r -> r.path("/users/**").filters(f -> f.filter(filter)).uri("http://localhost:8100"))
                 .route("post", r -> r.path("/posts/**").filters(f -> f.filter(filter)).uri("http://localhost:8300"))
+                .route("log", r -> r.path("/logs/**").filters(f -> f.filter(filter)).uri("http://localhost:8500"))
                 .build();
     }
 }

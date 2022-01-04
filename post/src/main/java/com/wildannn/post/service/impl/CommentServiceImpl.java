@@ -26,6 +26,9 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private final PostStatService statService;
 
+    @Autowired
+    private KafkaProducer producer;
+
     @Override
     public Comment create(Comment comment, Integer postId, Integer userId) {
         Long longPostId = postId.longValue();
@@ -69,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
         Long longUserId = userId.longValue();
         Comment deleted = commentRepository.findByPostIdAndUserIdAndId(postId, userId, id);
         statService.uncomment(longPostId, longUserId);
-
+        producer.produce("Komentar id" +deleted.getId()+ " telah dihapus");
         commentRepository.delete(deleted);
     }
 }

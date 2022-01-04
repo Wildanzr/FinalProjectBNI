@@ -27,6 +27,9 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostStatService statService;
 
+    @Autowired
+    private final KafkaProducer producer;
+
     @Override
     public Post addPost(Post post) {
         return postRepository.save(post);
@@ -55,6 +58,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public void delete(Long id) {
         Post deleted = this.findById(id);
+        producer.produce("Post " +deleted.getId()+ " telah dihapus");
         postRepository.delete(deleted);
     }
 
